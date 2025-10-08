@@ -1,0 +1,57 @@
+{
+  "ui": {
+    "topbar_visible": true,
+    "sidebar_visible": true,
+    "sidebar_collapsed": true,
+    "theme_toggle_enabled": true,
+    "language_switcher_enabled": true,
+    "search_enabled": true,
+    "notifications_enabled": true,
+    "profile_enabled": true
+  },
+  "features": {
+    "weather_module": true,
+    "schemes_module": true,
+    "plant_protection_module": true,
+    "chat_module": true,
+    "voice_input": true,
+    "file_upload": true,
+    "offline_mode": true
+  },
+  "api": {
+    "use_mock_data": true,
+    "use_llm": true,
+    "weather_api_enabled": true,
+    "schemes_api_enabled": true,
+    "timeout": 5000
+  },
+  "chat": {
+    "max_messages": 100,
+    "typing_delay": 1000,
+    "auto_scroll": true,
+    "quick_replies_enabled": true
+  },
+  "appearance": {
+    "default_theme": "light",
+    "default_language": "en",
+    "animations_enabled": true,
+    "compact_mode": true
+  },
+  "branding": {
+    "app_name": "FamrutBot",
+    "logo_icon": "/logo.png",
+    "show_logo": true,
+    "show_name": true,
+    "version": "v1.0.0",
+    "client_logos": [
+      "/client-logo-1.png",
+      "/client-logo-2.png"
+    ],
+    "show_client_logos": true
+  },
+  "performance": {
+    "lazy_loading": true,
+    "cache_enabled": true,
+    "preload_routes": true
+  }
+}

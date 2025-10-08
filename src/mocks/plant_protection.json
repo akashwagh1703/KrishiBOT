@@ -1,0 +1,113 @@
+{
+  "crops": [
+    "Rice", "Wheat", "Cotton", "Sugarcane", "Tomato", "Potato", "Onion", "Maize", "Soybean", "Groundnut"
+  ],
+  "symptoms": [
+    "Yellow leaves", "Brown spots", "Wilting", "Stunted growth", "Holes in leaves", "White powder on leaves", "Black spots", "Curled leaves", "Root rot", "Fruit drop"
+  ],
+  "diagnoses": [
+    {
+      "id": "leaf-blight",
+      "crop": "Rice",
+      "symptoms": ["Brown spots", "Yellow leaves"],
+      "disease": "Leaf Blight",
+      "cause": "Fungal infection (Pyricularia oryzae)",
+      "severity": "Medium",
+      "treatment": [
+        "Apply Tricyclazole 75% WP @ 0.6g/L",
+        "Spray Propiconazole 25% EC @ 1ml/L",
+        "Ensure proper drainage",
+        "Remove infected plant debris"
+      ],
+      "prevention": [
+        "Use resistant varieties",
+        "Maintain proper plant spacing",
+        "Avoid excessive nitrogen fertilization",
+        "Practice crop rotation"
+      ],
+      "organicTreatment": [
+        "Neem oil spray @ 5ml/L",
+        "Copper sulfate solution",
+        "Trichoderma application"
+      ]
+    },
+    {
+      "id": "aphid-infestation",
+      "crop": "Cotton",
+      "symptoms": ["Curled leaves", "Stunted growth", "Holes in leaves"],
+      "disease": "Aphid Infestation",
+      "cause": "Insect pest (Aphis gossypii)",
+      "severity": "High",
+      "treatment": [
+        "Spray Imidacloprid 17.8% SL @ 0.3ml/L",
+        "Apply Thiamethoxam 25% WG @ 0.2g/L",
+        "Use yellow sticky traps",
+        "Encourage natural predators"
+      ],
+      "prevention": [
+        "Regular monitoring",
+        "Maintain field hygiene",
+        "Avoid over-fertilization with nitrogen",
+        "Plant trap crops like marigold"
+      ],
+      "organicTreatment": [
+        "Neem oil + soap solution",
+        "Garlic-chili spray",
+        "Release ladybird beetles"
+      ]
+    },
+    {
+      "id": "powdery-mildew",
+      "crop": "Tomato",
+      "symptoms": ["White powder on leaves", "Yellow leaves"],
+      "disease": "Powdery Mildew",
+      "cause": "Fungal infection (Leveillula taurica)",
+      "severity": "Medium",
+      "treatment": [
+        "Spray Sulfur 80% WP @ 2g/L",
+        "Apply Myclobutanil 10% WP @ 1g/L",
+        "Improve air circulation",
+        "Remove affected leaves"
+      ],
+      "prevention": [
+        "Avoid overhead watering",
+        "Maintain proper spacing",
+        "Use resistant varieties",
+        "Ensure good ventilation"
+      ],
+      "organicTreatment": [
+        "Baking soda spray (1g/L)",
+        "Milk spray (1:10 ratio)",
+        "Neem oil application"
+      ]
+    }
+  ],
+  "pesticides": [
+    {
+      "name": "Imidacloprid 17.8% SL",
+      "type": "Insecticide",
+      "targetPests": ["Aphids", "Whiteflies", "Thrips"],
+      "dosage": "0.3ml/L",
+      "safetyPeriod": "7 days",
+      "precautions": ["Wear protective gear", "Avoid spraying during flowering", "Do not spray in windy conditions"]
+    },
+    {
+      "name": "Tricyclazole 75% WP",
+      "type": "Fungicide",
+      "targetPests": ["Blast", "Leaf blight"],
+      "dosage": "0.6g/L",
+      "safetyPeriod": "14 days",
+      "precautions": ["Use clean water", "Spray during cool hours", "Avoid mixing with alkaline products"]
+    }
+  ],
+  "preventiveTips": [
+    "Practice crop rotation to break pest cycles",
+    "Maintain field hygiene by removing crop residues",
+    "Use certified seeds from reliable sources",
+    "Monitor crops regularly for early detection",
+    "Maintain proper plant spacing for air circulation",
+    "Use balanced fertilization to avoid nutrient stress",
+    "Install pheromone traps for pest monitoring",
+    "Encourage beneficial insects and natural predators"
+  ]
+}

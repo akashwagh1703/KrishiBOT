@@ -1,0 +1,85 @@
+{
+  "current": {
+    "location": "Delhi, India",
+    "temperature": 28,
+    "condition": "Partly Cloudy",
+    "humidity": 65,
+    "windSpeed": 12,
+    "sunrise": "06:15",
+    "sunset": "18:45",
+    "icon": "partly-cloudy"
+  },
+  "forecast": [
+    {
+      "date": "2024-01-15",
+      "day": "Today",
+      "high": 30,
+      "low": 18,
+      "condition": "Partly Cloudy",
+      "icon": "partly-cloudy",
+      "precipitation": 10
+    },
+    {
+      "date": "2024-01-16",
+      "day": "Tomorrow",
+      "high": 32,
+      "low": 20,
+      "condition": "Sunny",
+      "icon": "sunny",
+      "precipitation": 0
+    },
+    {
+      "date": "2024-01-17",
+      "day": "Wednesday",
+      "high": 29,
+      "low": 19,
+      "condition": "Cloudy",
+      "icon": "cloudy",
+      "precipitation": 20
+    },
+    {
+      "date": "2024-01-18",
+      "day": "Thursday",
+      "high": 27,
+      "low": 17,
+      "condition": "Light Rain",
+      "icon": "rain",
+      "precipitation": 80
+    },
+    {
+      "date": "2024-01-19",
+      "day": "Friday",
+      "high": 25,
+      "low": 16,
+      "condition": "Heavy Rain",
+      "icon": "heavy-rain",
+      "precipitation": 95
+    },
+    {
+      "date": "2024-01-20",
+      "day": "Saturday",
+      "high": 28,
+      "low": 18,
+      "condition": "Partly Cloudy",
+      "icon": "partly-cloudy",
+      "precipitation": 15
+    },
+    {
+      "date": "2024-01-21",
+      "day": "Sunday",
+      "high": 31,
+      "low": 21,
+      "condition": "Sunny",
+      "icon": "sunny",
+      "precipitation": 5
+    }
+  ],
+  "alerts": [
+    {
+      "type": "warning",
+      "title": "Heavy Rain Expected",
+      "description": "Heavy rainfall expected on Friday. Avoid outdoor farming activities.",
+      "validUntil": "2024-01-19T23:59:59Z"
+    }
+  ]
+}
