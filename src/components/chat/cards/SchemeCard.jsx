@@ -41,7 +41,7 @@ const SchemeCard = ({ data }) => {
         href={data.applicationLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-4 w-full flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:scale-105 transition-transform"
+        className="mt-4 w-full flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg transition-transform"
       >
         <i className="bx bx-link-external"></i>
         <span>Apply Online</span>

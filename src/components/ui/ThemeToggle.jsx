@@ -1,24 +1,33 @@
 import { useEffect } from 'react';
 import { useThemeStore } from '../../state/store';
-import { config } from '../../config';
 
 const ThemeToggle = () => {
   const { isDark, toggleTheme } = useThemeStore();
 
   useEffect(() => {
     // Apply theme to document
-    const theme = isDark ? 'dark' : config.appearance.default_theme;
-    if (theme === 'dark') {
+    if (isDark) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
   }, [isDark]);
 
+  useEffect(() => {
+    // Initialize theme on mount
+    const savedTheme = localStorage.getItem('theme-storage');
+    if (savedTheme) {
+      const { state } = JSON.parse(savedTheme);
+      if (state.isDark) {
+        document.documentElement.classList.add('dark');
+      }
+    }
+  }, []);
+
   return (
     <button
       onClick={toggleTheme}
-      className={`p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 ${config.appearance.animations_enabled ? 'transition-colors' : ''}`}
+      className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {isDark ? (

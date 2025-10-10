@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useThemeStore } from './state/store';
-import { config } from './config';
 import FloatingChatbot from './components/chat/FloatingChatbot';
 
 import { Suspense } from 'react';
@@ -11,13 +10,23 @@ function App() {
 
   useEffect(() => {
     // Apply theme on app load
-    const theme = isDark ? 'dark' : config.appearance.default_theme;
-    if (theme === 'dark') {
+    if (isDark) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
   }, [isDark]);
+
+  useEffect(() => {
+    // Initialize theme from localStorage on app start
+    const savedTheme = localStorage.getItem('theme-storage');
+    if (savedTheme) {
+      const { state } = JSON.parse(savedTheme);
+      if (state.isDark) {
+        document.documentElement.classList.add('dark');
+      }
+    }
+  }, []);
 
   return (
     <Router>

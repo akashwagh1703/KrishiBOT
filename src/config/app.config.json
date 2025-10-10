@@ -29,7 +29,11 @@
     "max_messages": 100,
     "typing_delay": 1000,
     "auto_scroll": true,
-    "quick_replies_enabled": true
+    "quick_replies_enabled": false,
+    "show_input_section": false,
+    "show_emoji_button": false,
+    "show_voice_button": false,
+    "show_send_button": false
   },
   "appearance": {
     "default_theme": "light",
