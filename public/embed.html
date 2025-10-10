@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KrishiBot - Embed Example</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    .highlight {
+      background: #f0fdf4;
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 4px solid #22c55e;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌾 Welcome to Our Agricultural Portal</h1>
+    <p>
+      This is a demo page showing how KrishiBot can be embedded into any website.
+      The chatbot widget appears in the bottom-right corner and can be used to:
+    </p>
+    
+    <div class="highlight">
+      <h3>✨ Features:</h3>
+      <ul>
+        <li>🌤️ Get real-time weather updates</li>
+        <li>📜 Explore government schemes and subsidies</li>
+        <li>🛡️ Diagnose plant diseases and get treatment recommendations</li>
+        <li>🌾 Select crops and get disease-specific guidance</li>
+        <li>💬 Chat with AI for farming advice</li>
+      </ul>
+    </div>
+    
+    <h2>How to Embed KrishiBot</h2>
+    <p>Simply add this script tag to your website:</p>
+    
+    <pre style="background: #f5f5f5; padding: 15px; border-radius: 8px; overflow-x: auto;">
+&lt;script src="https://your-domain.com/krishibot-widget.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  KrishiBot.init({
+    position: 'bottom-right',
+    theme: 'light',
+    language: 'en'
+  });
+&lt;/script&gt;
+    </pre>
+    
+    <p style="margin-top: 30px; color: #22c55e; font-weight: bold;">
+      👉 Click the chat button in the bottom-right corner to start!
+    </p>
+  </div>
+
+  <!-- Embed KrishiBot Widget -->
+  <div id="krishibot-root"></div>
+  <script>
+    // This would load your React app in production
+    // For now, it's a placeholder showing how to embed
+    console.log('KrishiBot Widget Ready');
+  </script>
+</body>
+</html>

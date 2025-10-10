@@ -29,6 +29,14 @@ const GuidedHome = () => {
       href: '/plant-protection',
       color: 'bg-yellow-500',
       features: ['Disease diagnosis', 'Pest identification', 'Treatment recommendations', 'Prevention tips']
+    },
+    {
+      title: 'Select Crop',
+      description: 'Choose your crop from visual grid and get disease-specific guidance with chat support',
+      icon: 'bx-grid-alt',
+      href: '/select-crop',
+      color: 'bg-purple-500',
+      features: ['Visual crop selection', 'Disease-specific guidance', 'Chat-based assistance', 'Treatment recommendations']
     }
   ];
 
@@ -45,7 +53,7 @@ const GuidedHome = () => {
       </div>
 
       {/* Guided Options */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
         {guidedOptions.map((option) => (
           <Link
             key={option.title}

@@ -164,6 +164,21 @@ export const plantProtectionAPI = {
   async getPreventiveTips() {
     await new Promise(resolve => setTimeout(resolve, 100));
     return plantProtectionData.preventiveTips;
+  },
+
+  async getAll() {
+    const cacheKey = 'plant_protection_all';
+    const cached = getFromCache(cacheKey);
+    if (cached) return cached;
+
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    // In production, replace with:
+    // const response = await api.get('/plant-protection');
+    // return response.data;
+    
+    setCache(cacheKey, plantProtectionData);
+    return plantProtectionData;
   }
 };
 

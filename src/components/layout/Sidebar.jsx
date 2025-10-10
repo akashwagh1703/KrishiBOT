@@ -32,6 +32,11 @@ const Sidebar = () => {
       icon: 'bx-leaf'
     },
     {
+      name: 'Select Crop',
+      href: '/select-crop',
+      icon: 'bx-grid-alt'
+    },
+    {
       name: t('chat'),
       href: '/chat',
       icon: 'bx-chat'
