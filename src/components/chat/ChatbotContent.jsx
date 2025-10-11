@@ -280,24 +280,26 @@ const ChatbotContent = () => {
             <MessageBubble message={message} />
             
             {message.card && (
-              <div className="mt-2 animate-fade-in">
-                {message.card.type === 'weather' && <WeatherCard data={message.card.data} />}
-                {message.card.type === 'scheme' && <SchemeCard data={message.card.data} />}
-                {message.card.type === 'crop-grid' && (
-                  <CropGrid crops={message.card.data} onSelect={handleCropSelection} />
-                )}
-                {message.card.type === 'dropdown' && (
-                  <DropdownCard
-                    data={message.card.data}
-                    field={message.card.field}
-                    context={message.card.context}
-                    onSelect={(value) => {
-                      if (message.card.field === 'scheme') handleSchemeSelection(value);
-                      else if (message.card.field === 'crop') handleCropSelection(value);
-                      else if (message.card.field === 'disease') handleDiseaseSelection(value, message.card.context.crop);
-                    }}
-                  />
-                )}
+              <div className="flex justify-start">
+                <div className="mt-2 ml-11 animate-fade-in max-w-2xl">
+                  {message.card.type === 'weather' && <WeatherCard data={message.card.data} />}
+                  {message.card.type === 'scheme' && <SchemeCard data={message.card.data} />}
+                  {message.card.type === 'crop-grid' && (
+                    <CropGrid crops={message.card.data} onSelect={handleCropSelection} />
+                  )}
+                  {message.card.type === 'dropdown' && (
+                    <DropdownCard
+                      data={message.card.data}
+                      field={message.card.field}
+                      context={message.card.context}
+                      onSelect={(value) => {
+                        if (message.card.field === 'scheme') handleSchemeSelection(value);
+                        else if (message.card.field === 'crop') handleCropSelection(value);
+                        else if (message.card.field === 'disease') handleDiseaseSelection(value, message.card.context.crop);
+                      }}
+                    />
+                  )}
+                </div>
               </div>
             )}
 

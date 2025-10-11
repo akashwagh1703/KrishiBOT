@@ -7,7 +7,7 @@
     "language_switcher_enabled": true,
     "search_enabled": true,
     "notifications_enabled": true,
-    "profile_enabled": true
+    "profile_enabled": false
   },
   "features": {
     "weather_module": true,
