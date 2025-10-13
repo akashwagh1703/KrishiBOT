@@ -2,6 +2,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useThemeStore } from '../../state/store';
 import LanguageSwitcher from '../ui/LanguageSwitcher';
 import ChatbotContent from './ChatbotContent';
+import { authAPI } from '../../services/api';
+import toast from 'react-hot-toast';
 import config from "../../config/app.config.json";
 import { colors } from '../../utils/colors';
 
@@ -9,6 +11,33 @@ import { colors } from '../../utils/colors';
 const FloatingChatbot = () => {
   const navigate = useNavigate();
   const { isDark, toggleTheme } = useThemeStore();
+
+  const handleLogout = () => {
+    toast((t) => (
+      <div className="flex items-center gap-3">
+        <span>Are you sure you want to logout?</span>
+        <div className="flex gap-2">
+          <button
+            onClick={() => {
+              authAPI.logout();
+              toast.success('Logged out successfully!');
+              toast.dismiss(t.id);
+              navigate('/login');
+            }}
+            className="px-3 py-1 bg-red-500 text-white rounded-lg text-sm font-medium"
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="px-3 py-1 bg-gray-300 text-gray-700 rounded-lg text-sm font-medium"
+          >
+            No
+          </button>
+        </div>
+      </div>
+    ), { duration: 5000 });
+  };
 
   return (
     <div className="h-screen flex flex-col">
@@ -59,6 +88,13 @@ const FloatingChatbot = () => {
               <i className="bx bx-user text-white text-xl"></i>
             </NavLink>
           )}
+          <button
+            onClick={handleLogout}
+            className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors"
+            aria-label="Logout"
+          >
+            <i className="bx bx-log-out text-white text-xl"></i>
+          </button>
         </div>
       </div>
 

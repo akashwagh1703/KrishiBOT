@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
+import { authAPI } from '../services/api';
 import { colors } from '../utils/colors';
 
 const Profile = () => {
@@ -10,19 +12,26 @@ const Profile = () => {
   const [profile, setProfile] = useState({
     name: 'Farmer User',
     email: 'farmer@example.com',
-    phone: '+91 98765 43210',
+    phone: '',
     location: 'Delhi, India',
     farmSize: '5 acres',
     primaryCrops: ['Rice', 'Wheat'],
     experience: '10 years'
   });
 
+  useEffect(() => {
+    const userData = authAPI.getUserData();
+    if (userData?.mobile) {
+      setProfile(prev => ({ ...prev, phone: userData.mobile }));
+    }
+  }, []);
+
   const [editedProfile, setEditedProfile] = useState(profile);
 
   const handleSave = () => {
     setProfile(editedProfile);
     setIsEditing(false);
-    alert('Profile updated successfully!');
+    toast.success('Profile updated successfully!');
   };
 
   const handleCancel = () => {
@@ -50,8 +59,7 @@ const Profile = () => {
             <i className="bx bx-arrow-back text-white text-xl"></i>
           </button>
           <div>
-            <h3 className="text-white font-bold text-2xl">Profile</h3>
-            <p className="text-green-100 text-sm">Manage your information</p>
+            <h3 className="text-white font-bold text-xl">Profile</h3>
           </div>
         </div>
         {!isEditing && (

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useThemeStore } from './state/store';
+import { Toaster } from 'react-hot-toast';
 import AuthFlow from './components/auth/AuthFlow';
 import OTPFlow from './components/auth/OTPFlow';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -34,6 +35,7 @@ function App() {
 
   return (
     <Router>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="h-screen overflow-hidden">
         <Suspense fallback={null}>
           <Routes>
@@ -64,19 +66,15 @@ function App() {
                 <FloatingChatbot />
               </ProtectedRoute>
             } />
-
             <Route path="/profile" element={
               <ProtectedRoute>
                 <div className="h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-y-auto">
-                  
-                    <Profile />
-               
+                  <Profile />
                 </div>
               </ProtectedRoute>
             } />
-
             <Route path="*" element={
-              <Navigate to={localStorage.getItem('isAuthenticated') === 'true' ? '/chat' : '/login'} replace />
+              <Navigate to={localStorage.getItem('is_authenticated') === 'true' ? '/chat' : '/login'} replace />
             } />
           </Routes>
         </Suspense>

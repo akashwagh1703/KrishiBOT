@@ -8,6 +8,7 @@ import CropGrid from './cards/CropGrid';
 import DropdownCard from './cards/DropdownCard';
 import { weatherAPI, schemesAPI, plantProtectionAPI } from '../../services/api';
 import { useAppStore } from '../../state/store';
+import { colors } from '../../utils/colors';
 import config from '../../config/app.config.json';
 
 const ChatbotContent = () => {
@@ -51,7 +52,7 @@ const ChatbotContent = () => {
     if (config.features.weather_module) suggestions.push({ icon: '☀️', text: 'Weather Info', action: 'weather' });
     if (config.features.plant_protection_module) suggestions.push({ icon: '🛡️', text: 'Plant Protection', action: 'plant-protection' });
     if (config.features.schemes_module) suggestions.push({ icon: '📜', text: 'Schemes', action: 'schemes' });
-    suggestions.push({ icon: '🌾', text: 'Select Crop', action: 'select-crop' });
+    // suggestions.push({ icon: '🌾', text: 'Select Crop', action: 'select-crop' });
 
     const welcomeMessage = {
       text: `🌾 Welcome to ${config.branding.app_name}! I'm your AI-powered farming assistant. How can I help you today?`,
@@ -173,12 +174,61 @@ const ChatbotContent = () => {
     await simulateTyping(1500);
 
     const botMessage = {
-      text: `Here are the details for **${scheme.title}**:`,
+      text: `You selected **${scheme.title}**\n\nWhat would you like to know?`,
       sender: 'bot',
       timestamp: new Date().toISOString(),
-      card: { type: 'scheme', data: scheme }
+      suggestions: [
+        { icon: '📋', text: 'About Scheme', action: `scheme-about-${scheme.id}` },
+        { icon: '✅', text: 'Eligibility', action: `scheme-eligibility-${scheme.id}` },
+        { icon: '📝', text: 'How to Apply', action: `scheme-apply-${scheme.id}` }
+      ]
     };
     addMessage(botMessage);
+  };
+
+  const handleSchemeAction = async (action, schemeId) => {
+    try {
+      const scheme = await schemesAPI.getDetails(schemeId);
+      if (!scheme) return;
+
+      let responseText = '';
+      let userText = '';
+
+      if (action === 'about') {
+        userText = 'Tell me about this scheme';
+        responseText = `**${scheme.title}**\n\n${scheme.fullDescription || scheme.shortDescription}\n\n**Benefits:** ${scheme.benefits}`;
+      } else if (action === 'eligibility') {
+        userText = 'Who is eligible?';
+        responseText = `**Eligibility for ${scheme.title}**\n\n${scheme.eligibility}\n\n**Required Documents:**\n${scheme.documents?.map((doc, i) => `${i + 1}. ${doc}`).join('\n') || 'Check official website'}`;
+      } else if (action === 'apply') {
+        userText = 'How do I apply?';
+        responseText = `**How to Apply for ${scheme.title}**\n\n**Application Link:** ${scheme.applicationLink}\n\n**Steps:**\n1. Visit the official website\n2. Register/Login\n3. Fill application form\n4. Upload required documents\n5. Submit application\n\n**Deadline:** ${scheme.deadline || 'Check official website'}`;
+      }
+
+      addMessage({
+        text: userText,
+        sender: 'user',
+        timestamp: new Date().toISOString()
+      });
+
+      await simulateTyping(1500);
+
+      addMessage({
+        text: responseText,
+        sender: 'bot',
+        timestamp: new Date().toISOString(),
+        suggestions: [
+          { icon: '🔙', text: 'Back to Options', action: `scheme-back-${schemeId}` },
+          { icon: '🏠', text: 'Home', action: 'home' }
+        ]
+      });
+    } catch (error) {
+      addMessage({
+        text: "Sorry, I couldn't fetch scheme details. Please try again.",
+        sender: 'bot',
+        timestamp: new Date().toISOString()
+      });
+    }
   };
 
   const handleCropSelection = async (crop) => {
@@ -192,8 +242,7 @@ const ChatbotContent = () => {
     await simulateTyping();
 
     try {
-      const data = await plantProtectionAPI.getAll();
-      const diseases = data.diagnoses.filter(d => d.crop === crop).map(d => d.disease);
+      const diseases = await plantProtectionAPI.getDiseases(crop);
       
       const botMessage = {
         text: `Great! Now select the disease affecting your ${crop}:`,
@@ -219,27 +268,62 @@ const ChatbotContent = () => {
     };
     addMessage(userMessage);
 
-    await simulateTyping(2000);
+    await simulateTyping(1500);
 
+    const botMessage = {
+      text: `You selected **${disease}** for ${crop}\n\nWhat information do you need?`,
+      sender: 'bot',
+      timestamp: new Date().toISOString(),
+      suggestions: [
+        { icon: '💊', text: 'Chemicals', action: `crop-chemicals-${crop}-${disease}` },
+        { icon: '🛡️', text: 'Plant Protection', action: `crop-protection-${crop}-${disease}` },
+        { icon: '🔙', text: 'Back', action: 'plant-protection' }
+      ]
+    };
+    addMessage(botMessage);
+  };
+
+  const handleCropAction = async (action, crop, disease) => {
     try {
-      const data = await plantProtectionAPI.getAll();
-      const diagnosis = data.diagnoses.find(d => d.crop === crop && d.disease === disease);
-      
-      if (diagnosis) {
-        const botMessage = {
-          text: `**Diagnosis: ${disease}**\n\n🦠 **Cause:** ${diagnosis.cause}\n⚠️ **Severity:** ${diagnosis.severity}\n\n💊 **Treatment:**\n${diagnosis.treatment.map((t, i) => `${i + 1}. ${t}`).join('\n')}\n\n🛡️ **Prevention:**\n${diagnosis.prevention.map((p, i) => `${i + 1}. ${p}`).join('\n')}`,
-          sender: 'bot',
-          timestamp: new Date().toISOString(),
-          suggestions: [
-            { icon: '🌿', text: 'Organic Treatment', action: 'organic' },
-            { icon: '🏠', text: 'Back to Home', action: 'home' }
-          ]
-        };
-        addMessage(botMessage);
+      let responseText = '';
+      let userText = '';
+
+      if (action === 'chemicals') {
+        userText = 'Show me chemical treatments';
+        const data = await plantProtectionAPI.getChemicals(crop, disease);
+        
+        if (data) {
+          responseText = `**Chemical Treatment for ${disease}**\n\n🦠 **Cause:** ${data.cause}\n⚠️ **Severity:** ${data.severity}\n\n💊 **Treatment:**\n${data.treatment?.map((t, i) => `${i + 1}. ${t}`).join('\n') || 'Consult agricultural expert'}`;
+        }
+      } else if (action === 'protection') {
+        userText = 'Show me plant protection methods';
+        const data = await plantProtectionAPI.getPlantProtection(crop, disease);
+        
+        if (data) {
+          responseText = `**Plant Protection for ${disease}**\n\n🛡️ **Prevention:**\n${data.prevention?.map((p, i) => `${i + 1}. ${p}`).join('\n') || 'Regular monitoring'}\n\n🌿 **Organic Treatment:**\n${data.organicTreatment?.map((t, i) => `${i + 1}. ${t}`).join('\n') || 'Neem oil spray'}`;
+        }
       }
+
+      addMessage({
+        text: userText,
+        sender: 'user',
+        timestamp: new Date().toISOString()
+      });
+
+      await simulateTyping(1500);
+
+      addMessage({
+        text: responseText || 'Information not available',
+        sender: 'bot',
+        timestamp: new Date().toISOString(),
+        suggestions: [
+          { icon: '🔙', text: 'Back to Options', action: `crop-back-${crop}-${disease}` },
+          { icon: '🏠', text: 'Home', action: 'home' }
+        ]
+      });
     } catch (error) {
       addMessage({
-        text: "Sorry, I couldn't find treatment information.",
+        text: "Sorry, I couldn't fetch the information. Please try again.",
         sender: 'bot',
         timestamp: new Date().toISOString()
       });
@@ -311,8 +395,31 @@ const ChatbotContent = () => {
                 suggestions={message.suggestions}
                 onSelect={(action) => {
                   if (action === 'home') {
-                    navigate('/');
+                    navigate('/chat');
                     initializeChat();
+                  } else if (action.startsWith('scheme-')) {
+                    const parts = action.split('-');
+                    const actionType = parts[1];
+                    const schemeId = parts.slice(2).join('-');
+                    
+                    if (actionType === 'back') {
+                      schemesAPI.getDetails(schemeId).then(scheme => {
+                        if (scheme) handleSchemeSelection(scheme);
+                      });
+                    } else {
+                      handleSchemeAction(actionType, schemeId);
+                    }
+                  } else if (action.startsWith('crop-')) {
+                    const parts = action.split('-');
+                    const actionType = parts[1];
+                    const crop = parts[2];
+                    const disease = parts.slice(3).join('-');
+                    
+                    if (actionType === 'back') {
+                      handleDiseaseSelection(disease, crop);
+                    } else {
+                      handleCropAction(actionType, crop, disease);
+                    }
                   } else {
                     handleSuggestionClick(action);
                   }
@@ -326,9 +433,9 @@ const ChatbotContent = () => {
           <div className="flex justify-start animate-fade-in">
             <div className="bg-white dark:bg-gray-700 rounded-2xl px-4 py-3 shadow-soft">
               <div className="flex space-x-1">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                <div className={`w-2 h-2 ${colors.bgPrimary} rounded-full animate-bounce`}></div>
+                <div className={`w-2 h-2 ${colors.bgPrimary} rounded-full animate-bounce`} style={{animationDelay: '0.1s'}}></div>
+                <div className={`w-2 h-2 ${colors.bgPrimary} rounded-full animate-bounce`} style={{animationDelay: '0.2s'}}></div>
               </div>
             </div>
           </div>
