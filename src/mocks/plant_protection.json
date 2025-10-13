@@ -1,105 +1,150 @@
 {
   "crops": [
-    "Rice", "Wheat", "Cotton", "Sugarcane", "Tomato", "Potato", "Onion", "Maize", "Soybean", "Groundnut"
+      {
+        "name": "Mustard",
+        "image_url": "http://localhost:8001/uploads/commodity_images/default.png",
+        "category": "Agriculture"
+      },
+      {
+        "name": "Soybean",
+        "image_url": "http://localhost:8001/uploads/commodity_images/default.png",
+        "category": "Agriculture"
+      },
+      {
+        "name": "Groundnut",
+        "image_url": "http://localhost:8001/uploads/commodity_images/default.png",
+        "category": "Agriculture"
+      },
+      {
+        "name": "Sugarcane",
+        "image_url": "http://localhost:8001/uploads/commodity_images/default.png",
+        "category": "Agriculture"
+      },
+      {
+        "name": "Maize",
+        "image_url": "http://localhost:8001/uploads/commodity_images/default.png",
+        "category": "Agriculture"
+      },
+      {
+        "name": "Chilly",
+        "image_url": "http://localhost:8001/uploads/commodity_images/default.png",
+        "category": "Agriculture"
+      },
+      {
+        "name": "Cotton",
+        "image_url": "http://localhost:8001/uploads/commodity_images/Cotton_Mobile.png",
+        "category": "Agriculture"
+      },
+      {
+        "name": "Cucumber",
+        "image_url": "http://localhost:8001/uploads/commodity_images/Cucumber_Mobile.png",
+        "category": "Agriculture"
+      },
+      {
+        "name": "Seasamum",
+        "image_url": "http://localhost:8001/uploads/commodity_images/default.png",
+        "category": "Agriculture"
+      },
+      {
+        "name": "Ragi",
+        "image_url": "http://localhost:8001/uploads/commodity_images/default.png",
+        "category": "Agriculture"
+      },
+      {
+        "name": "Bengal Gram",
+        "image_url": "http://localhost:8001/uploads/commodity_images/Gram_Mobile.png",
+        "category": "Agriculture"
+      },
+      {
+        "name": "Paddy",
+        "image_url": "http://localhost:8001/uploads/commodity_images/default.png",
+        "category": "Agriculture"
+      },
+      {
+        "name": "Arhar",
+        "image_url": "http://localhost:8001/uploads/commodity_images/Tur(Arhar)_Mobile.png",
+        "category": "Agriculture"
+      }
+    ],
+
+  "diseases": [
+    {
+      "name": "Leaf spot",
+      "description": "Disease affecting crops: Leaf spot",
+      "severity": "Medium",
+      "affected_crops": ["CUCUMBER"]
+    },
+    {
+      "name": "Aphid",
+      "description": "Disease affecting crops: Aphid",
+      "severity": "Medium",
+      "affected_crops": ["BENGAL GRAM", "MAIZE", "COTTON", "GROUNDNUT", "MUSTARD"]
+    },
+    {
+      "name": "Jassids",
+      "description": "Disease affecting crops: Jassids",
+      "severity": "Medium",
+      "affected_crops": ["ARHAR", "BENGAL GRAM", "COTTON", "GROUNDNUT", "SEASAMUM", "RAGI"]
+    },
+    {
+      "name": "Thrips",
+      "description": "Disease affecting crops: Thrips",
+      "severity": "Medium",
+      "affected_crops": ["BENGAL GRAM", "COTTON", "GROUNDNUT", "PADDY", "MAIZE"]
+    },
+    {
+      "name": "White fly",
+      "description": "Disease affecting crops: White fly",
+      "severity": "Medium",
+      "affected_crops": ["BENGAL GRAM", "GROUNDNUT", "SEASAMUM", "MUSTARD"]
+    }
+  ],
+  "chemicals": [
+    {
+      "name": "ZINEB 75% WP",
+      "type": "Pesticide",
+      "dosage": "As per label"
+    },
+    {
+      "name": "ACEPHATE 75% SP",
+      "type": "Pesticide",
+      "dosage": "As per label"
+    },
+    {
+      "name": "SPINOSAD 45% SC",
+      "type": "Pesticide",
+      "dosage": "As per label"
+    },
+    {
+      "name": "FIPRONIL 5% SC",
+      "type": "Pesticide",
+      "dosage": "As per label"
+    },
+    {
+      "name": "DIMETHOATE 30% EC",
+      "type": "Pesticide",
+      "dosage": "As per label"
+    },
+    {
+      "name": "CHLORPYRIPHOS 20% EC",
+      "type": "Pesticide",
+      "dosage": "As per label"
+    },
+    {
+      "name": "THIAMETHOXAM 25% WG",
+      "type": "Pesticide",
+      "dosage": "As per label"
+    },
+    {
+      "name": "CYPERMETHRIN 10% EC",
+      "type": "Pesticide",
+      "dosage": "As per label"
+    }
   ],
   "symptoms": [
     "Yellow leaves", "Brown spots", "Wilting", "Stunted growth", "Holes in leaves", "White powder on leaves", "Black spots", "Curled leaves", "Root rot", "Fruit drop"
   ],
-  "diagnoses": [
-    {
-      "id": "leaf-blight",
-      "crop": "Rice",
-      "symptoms": ["Brown spots", "Yellow leaves"],
-      "disease": "Leaf Blight",
-      "cause": "Fungal infection (Pyricularia oryzae)",
-      "severity": "Medium",
-      "treatment": [
-        "Apply Tricyclazole 75% WP @ 0.6g/L",
-        "Spray Propiconazole 25% EC @ 1ml/L",
-        "Ensure proper drainage",
-        "Remove infected plant debris"
-      ],
-      "prevention": [
-        "Use resistant varieties",
-        "Maintain proper plant spacing",
-        "Avoid excessive nitrogen fertilization",
-        "Practice crop rotation"
-      ],
-      "organicTreatment": [
-        "Neem oil spray @ 5ml/L",
-        "Copper sulfate solution",
-        "Trichoderma application"
-      ]
-    },
-    {
-      "id": "aphid-infestation",
-      "crop": "Cotton",
-      "symptoms": ["Curled leaves", "Stunted growth", "Holes in leaves"],
-      "disease": "Aphid Infestation",
-      "cause": "Insect pest (Aphis gossypii)",
-      "severity": "High",
-      "treatment": [
-        "Spray Imidacloprid 17.8% SL @ 0.3ml/L",
-        "Apply Thiamethoxam 25% WG @ 0.2g/L",
-        "Use yellow sticky traps",
-        "Encourage natural predators"
-      ],
-      "prevention": [
-        "Regular monitoring",
-        "Maintain field hygiene",
-        "Avoid over-fertilization with nitrogen",
-        "Plant trap crops like marigold"
-      ],
-      "organicTreatment": [
-        "Neem oil + soap solution",
-        "Garlic-chili spray",
-        "Release ladybird beetles"
-      ]
-    },
-    {
-      "id": "powdery-mildew",
-      "crop": "Tomato",
-      "symptoms": ["White powder on leaves", "Yellow leaves"],
-      "disease": "Powdery Mildew",
-      "cause": "Fungal infection (Leveillula taurica)",
-      "severity": "Medium",
-      "treatment": [
-        "Spray Sulfur 80% WP @ 2g/L",
-        "Apply Myclobutanil 10% WP @ 1g/L",
-        "Improve air circulation",
-        "Remove affected leaves"
-      ],
-      "prevention": [
-        "Avoid overhead watering",
-        "Maintain proper spacing",
-        "Use resistant varieties",
-        "Ensure good ventilation"
-      ],
-      "organicTreatment": [
-        "Baking soda spray (1g/L)",
-        "Milk spray (1:10 ratio)",
-        "Neem oil application"
-      ]
-    }
-  ],
-  "pesticides": [
-    {
-      "name": "Imidacloprid 17.8% SL",
-      "type": "Insecticide",
-      "targetPests": ["Aphids", "Whiteflies", "Thrips"],
-      "dosage": "0.3ml/L",
-      "safetyPeriod": "7 days",
-      "precautions": ["Wear protective gear", "Avoid spraying during flowering", "Do not spray in windy conditions"]
-    },
-    {
-      "name": "Tricyclazole 75% WP",
-      "type": "Fungicide",
-      "targetPests": ["Blast", "Leaf blight"],
-      "dosage": "0.6g/L",
-      "safetyPeriod": "14 days",
-      "precautions": ["Use clean water", "Spray during cool hours", "Avoid mixing with alkaline products"]
-    }
-  ],
+ 
   "preventiveTips": [
     "Practice crop rotation to break pest cycles",
     "Maintain field hygiene by removing crop residues",

@@ -28,6 +28,18 @@ const MessageBubble = ({ message }) => {
               index % 2 === 1 ? <strong key={index}>{part}</strong> : part
             )}
           </div>
+          
+          {message.button && (
+            <a
+              href={message.button.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex items-center mt-3 px-4 py-2 ${colors.gradientPrimary} text-white rounded-lg hover:opacity-90 transition-opacity text-sm font-medium`}
+            >
+              <i className="bx bx-link-external mr-2"></i>
+              {message.button.text}
+            </a>
+          )}
         </div>
         
         <div className={`text-xs text-gray-400 mt-1 ${isBot ? 'text-left' : 'text-right'}`}>

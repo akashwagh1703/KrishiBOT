@@ -4,6 +4,7 @@ import config from '../config/app.config.json';
 // Mock data imports
 import weatherData from '../mocks/weather.json';
 import schemesData from '../mocks/schemes.json';
+import schemeDetailsData from '../mocks/scheme_details.json';
 import plantProtectionData from '../mocks/plant_protection.json';
 
 // Create axios instance
@@ -41,12 +42,14 @@ api.interceptors.response.use(
 
 // Cache utilities
 const CACHE_DURATION = config.performance.cache_enabled ? 60 * 60 * 1000 : 0; // 1 hour
+const CACHE_VERSION = `v1_${config.api.use_mock_data ? 'mock' : 'api'}`;
+
 const getFromCache = (key) => {
   if (!config.performance.cache_enabled) return null;
   const cached = localStorage.getItem(key);
   if (cached) {
-    const { data, timestamp } = JSON.parse(cached);
-    if (Date.now() - timestamp < CACHE_DURATION) {
+    const { data, timestamp, version } = JSON.parse(cached);
+    if (version === CACHE_VERSION && Date.now() - timestamp < CACHE_DURATION) {
       return data;
     }
     localStorage.removeItem(key);
@@ -58,7 +61,8 @@ const setCache = (key, data) => {
   if (config.performance.cache_enabled) {
     localStorage.setItem(key, JSON.stringify({
       data,
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      version: CACHE_VERSION
     }));
   }
 };
@@ -122,27 +126,28 @@ export const schemesAPI = {
     }
 
     try {
-      const response = await api.get('/v1/schemes/list');
-      setCache(cacheKey, response.data);
-      return response.data;
+      const response = await api.get('schemes/list');
+      const schemes = response.data?.data?.schemes || response.data;
+      setCache(cacheKey, schemes);
+      return schemes;
     } catch (error) {
       console.error('Schemes API error:', error);
-      return schemesData;
+      throw error;
     }
   },
 
   async getDetails(schemeName) {
     if (config.api.use_mock_data) {
       await new Promise(resolve => setTimeout(resolve, 200));
-      return schemesData.find(scheme => scheme.id === schemeName || scheme.title === schemeName);
+      return schemeDetailsData[schemeName] || null;
     }
 
     try {
-      const response = await api.get(`/v1/schemes/details/${schemeName}`);
-      return response.data;
+      const response = await api.get(`schemes/details/${schemeName}`);
+      return response.data?.data || response.data;
     } catch (error) {
       console.error('Scheme details error:', error);
-      return schemesData.find(scheme => scheme.id === schemeName);
+      throw error;
     }
   },
 
@@ -157,19 +162,13 @@ export const schemesAPI = {
       
       if (query) {
         results = results.filter(scheme => 
-          scheme.title.toLowerCase().includes(query.toLowerCase()) ||
-          scheme.shortDescription.toLowerCase().includes(query.toLowerCase())
+          scheme.name.toLowerCase().includes(query.toLowerCase()) ||
+          scheme.description.toLowerCase().includes(query.toLowerCase())
         );
       }
       
       if (filters.category) {
         results = results.filter(scheme => scheme.category === filters.category);
-      }
-      
-      if (filters.cropType) {
-        results = results.filter(scheme => 
-          scheme.cropTypes.includes('All') || scheme.cropTypes.includes(filters.cropType)
-        );
       }
       
       return results;
@@ -193,51 +192,52 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.get('/v1/crops/list');
-      return response.data;
+      const response = await api.get('crops/list');
+      return response.data?.data?.crops || response.data;
     } catch (error) {
       console.error('Crops API error:', error);
-      return plantProtectionData.crops;
+      throw error;
     }
   },
 
   async getDiseases(crop) {
     if (config.api.use_mock_data) {
       await new Promise(resolve => setTimeout(resolve, 100));
-      const diseases = plantProtectionData.diagnoses
-        .filter(d => d.crop === crop)
-        .map(d => d.disease);
-      return [...new Set(diseases)];
+      const filteredDiseases = plantProtectionData.diseases
+        .filter(d => d.affected_crops?.some(c => c.toUpperCase() === crop.toUpperCase()))
+        .map(d => d.name);
+      return filteredDiseases;
     }
 
     try {
-      const response = await api.get('/v1/crops/diseases', { params: { crop } });
-      return response.data;
+      const response = await api.get('crops/diseases');
+      const allDiseases = response.data?.data?.diseases || response.data;
+      const filteredDiseases = allDiseases
+        .filter(d => d.affected_crops?.some(c => c.toUpperCase() === crop.toUpperCase()))
+        .map(d => d.name);
+      return filteredDiseases;
     } catch (error) {
       console.error('Diseases API error:', error);
-      return [];
+      throw error;
     }
   },
 
   async getChemicals(crop, disease) {
     if (config.api.use_mock_data) {
       await new Promise(resolve => setTimeout(resolve, 800));
-      const diagnosis = plantProtectionData.diagnoses.find(
-        d => d.crop === crop && d.disease === disease
-      );
-      return diagnosis || null;
+      return { chemicals: plantProtectionData.chemicals };
     }
 
     try {
-      const response = await api.post('/v1/crops/chemicals', { crop, disease });
-      return response.data;
+      const response = await api.post('crops/chemicals', { crop, disease });
+      return response.data?.data || response.data;
     } catch (error) {
       console.error('Chemicals API error:', error);
-      return null;
+      throw error;
     }
   },
 
-  async getPlantProtection(crop, disease) {
+  async getPlantProtection(crop, disease, chemical) {
     if (config.api.use_mock_data) {
       await new Promise(resolve => setTimeout(resolve, 500));
       const diagnosis = plantProtectionData.diagnoses.find(
@@ -247,11 +247,13 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.get('/v1/crops/plant-protection', { params: { crop, disease } });
-      return response.data;
+      const params = { crop, disease };
+      if (chemical) params.chemical = chemical;
+      const response = await api.get('/v1/crops/plant-protection', { params });
+      return response.data?.data || response.data;
     } catch (error) {
       console.error('Plant protection API error:', error);
-      return null;
+      throw error;
     }
   },
 
@@ -267,12 +269,12 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.get('/v1/crops/plant-protection');
+      const response = await api.get('crops/plant-protection');
       setCache(cacheKey, response.data);
       return response.data;
     } catch (error) {
       console.error('Plant protection API error:', error);
-      return plantProtectionData;
+      throw error;
     }
   }
 };
@@ -293,14 +295,11 @@ export const chatbotAPI = {
     }
 
     try {
-      const response = await api.post('/v1/chatbot/ask', { question, context });
+      const response = await api.post('chatbot/ask', { question, context });
       return response.data;
     } catch (error) {
       console.error('Chatbot API error:', error);
-      return {
-        answer: "I'm having trouble understanding. Please try using the menu options.",
-        suggestions: []
-      };
+      throw error;
     }
   }
 };
@@ -316,7 +315,7 @@ export const authAPI = {
     }
 
     try {
-      const response = await api.post('/v1/login/send-login-otp', { mobile_no });
+      const response = await api.post('login/send-login-otp', { mobile_no });
       const userData = { mobile_no, timestamp: Date.now() };
       localStorage.setItem('user_data', JSON.stringify(userData));
       return response.data;
@@ -334,7 +333,7 @@ export const authAPI = {
     }
 
     try {
-      const response = await api.post('/v1/login/verify-login-otp', { mobile_no, otp });
+      const response = await api.post('login/verify-login-otp', { mobile_no, otp });
       if (response.data.token) {
         localStorage.setItem('auth_token', response.data.token);
       }

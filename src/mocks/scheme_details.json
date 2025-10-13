@@ -1,0 +1,212 @@
+{
+  "PM Kisan Samman Nidhi": {
+    "scheme_name": "PM Kisan Samman Nidhi",
+    "url": "https://pmkisan.gov.in",
+    "details": [
+      {
+        "content": "PM Kisan Samman Nidhi is a government initiative to support farmers with direct income support of ₹6,000 per year. This scheme aims to improve farmer income and provide financial assistance for agricultural inputs and domestic needs.",
+        "relevance_score": 0.9,
+        "section": "about"
+      },
+      {
+        "content": "Eligibility for PM Kisan Samman Nidhi: All landholding farmers' families. Farmers with valid land records, Aadhaar card, and bank account. Small and marginal farmers are given priority.",
+        "relevance_score": 0.9,
+        "section": "eligibility"
+      },
+      {
+        "content": "To apply for PM Kisan Samman Nidhi: Visit https://pmkisan.gov.in or nearest agriculture office. Required documents: Land records, Aadhaar card, bank passbook. The amount is transferred directly to bank account in three equal installments.",
+        "relevance_score": 0.9,
+        "section": "apply"
+      }
+    ]
+  },
+  "Pradhan Mantri Fasal Bima Yojana": {
+    "scheme_name": "Pradhan Mantri Fasal Bima Yojana",
+    "url": "https://pmfby.gov.in",
+    "details": [
+      {
+        "content": "Pradhan Mantri Fasal Bima Yojana provides comprehensive insurance coverage to farmers against crop loss due to natural calamities, pests, and diseases. Coverage up to ₹2 lakh with minimal premium.",
+        "relevance_score": 0.9,
+        "section": "about"
+      },
+      {
+        "content": "Eligibility for Pradhan Mantri Fasal Bima Yojana: All farmers growing notified crops. Both loanee and non-loanee farmers can apply. Age limit: 18-70 years.",
+        "relevance_score": 0.9,
+        "section": "eligibility"
+      },
+      {
+        "content": "To apply for Pradhan Mantri Fasal Bima Yojana: Visit https://pmfby.gov.in or contact nearest bank/insurance company. Required documents: Aadhaar card, bank account, land documents, sowing certificate.",
+        "relevance_score": 0.9,
+        "section": "apply"
+      }
+    ]
+  },
+  "Kisan Credit Card Scheme": {
+    "scheme_name": "Kisan Credit Card Scheme",
+    "url": "https://www.nabard.org/kcc",
+    "details": [
+      {
+        "content": "Kisan Credit Card Scheme provides credit facility to farmers for cultivation and other agricultural needs. Credit up to ₹3 lakh at 4% interest rate with flexible repayment options.",
+        "relevance_score": 0.9,
+        "section": "about"
+      },
+      {
+        "content": "Eligibility for Kisan Credit Card Scheme: All farmers with land records. Tenant farmers and sharecroppers are also eligible. Valid Aadhaar and PAN card required.",
+        "relevance_score": 0.9,
+        "section": "eligibility"
+      },
+      {
+        "content": "To apply for Kisan Credit Card Scheme: Visit nearest bank branch or apply online through bank website. Required documents: Aadhaar card, PAN card, land records, income certificate.",
+        "relevance_score": 0.9,
+        "section": "apply"
+      }
+    ]
+  },
+  "Soil Health Card Scheme": {
+    "scheme_name": "Soil Health Card Scheme",
+    "url": "https://soilhealth.dac.gov.in",
+    "details": [
+      {
+        "content": "Soil Health Card Scheme provides free soil testing and recommendations to farmers. The card carries crop-wise recommendations of nutrients and fertilizers for individual farms to improve productivity.",
+        "relevance_score": 0.9,
+        "section": "about"
+      },
+      {
+        "content": "Eligibility for Soil Health Card Scheme: All farmers with agricultural land. No age or land size restrictions. Priority given to small and marginal farmers.",
+        "relevance_score": 0.9,
+        "section": "eligibility"
+      },
+      {
+        "content": "To apply for Soil Health Card Scheme: Visit nearest agriculture office or soil testing laboratory. Required documents: Aadhaar card, land records. Soil samples will be collected and tested free of cost.",
+        "relevance_score": 0.9,
+        "section": "apply"
+      }
+    ]
+  },
+  "National Agriculture Market": {
+    "scheme_name": "National Agriculture Market",
+    "url": "https://www.enam.gov.in",
+    "details": [
+      {
+        "content": "National Agriculture Market (e-NAM) is an online trading platform for agricultural commodities. It provides better price discovery and transparent auction process for farmers to sell their produce.",
+        "relevance_score": 0.9,
+        "section": "about"
+      },
+      {
+        "content": "Eligibility for National Agriculture Market: All farmers and traders can register. Valid mobile number and bank account required. No registration fee.",
+        "relevance_score": 0.9,
+        "section": "eligibility"
+      },
+      {
+        "content": "To register on National Agriculture Market: Visit https://www.enam.gov.in or nearest e-NAM mandi. Required documents: Aadhaar card, bank account details, mobile number.",
+        "relevance_score": 0.9,
+        "section": "apply"
+      }
+    ]
+  },
+  "Paramparagat Krishi Vikas Yojana": {
+    "scheme_name": "Paramparagat Krishi Vikas Yojana",
+    "url": "https://pgsindia-ncof.gov.in",
+    "details": [
+      {
+        "content": "Paramparagat Krishi Vikas Yojana promotes organic farming through cluster approach. Financial assistance of ₹50,000 per hectare over 3 years for organic farming adoption.",
+        "relevance_score": 0.9,
+        "section": "about"
+      },
+      {
+        "content": "Eligibility for Paramparagat Krishi Vikas Yojana: Farmers willing to adopt organic farming. Group formation of minimum 50 farmers required. Land should be suitable for organic farming.",
+        "relevance_score": 0.9,
+        "section": "eligibility"
+      },
+      {
+        "content": "To apply for Paramparagat Krishi Vikas Yojana: Contact nearest agriculture office or visit https://pgsindia-ncof.gov.in. Required documents: Aadhaar card, land records, group formation certificate.",
+        "relevance_score": 0.9,
+        "section": "apply"
+      }
+    ]
+  },
+  "Rashtriya Krishi Vikas Yojana": {
+    "scheme_name": "Rashtriya Krishi Vikas Yojana",
+    "url": "https://rkvy.nic.in",
+    "details": [
+      {
+        "content": "Rashtriya Krishi Vikas Yojana aims to achieve 4% annual growth in agriculture sector. Provides financial assistance for agricultural infrastructure development and farmer welfare programs.",
+        "relevance_score": 0.9,
+        "section": "about"
+      },
+      {
+        "content": "Eligibility for Rashtriya Krishi Vikas Yojana: State governments and farmer organizations can apply for projects. Individual farmers benefit through state-level programs.",
+        "relevance_score": 0.9,
+        "section": "eligibility"
+      },
+      {
+        "content": "To benefit from Rashtriya Krishi Vikas Yojana: Contact state agriculture department for ongoing projects. Farmers can participate in various sub-schemes and programs.",
+        "relevance_score": 0.9,
+        "section": "apply"
+      }
+    ]
+  },
+  "Agricultural Marketing Infrastructure": {
+    "scheme_name": "Agricultural Marketing Infrastructure",
+    "url": "https://agricoop.nic.in",
+    "details": [
+      {
+        "content": "Agricultural Marketing Infrastructure scheme supports development of marketing infrastructure like warehouses, cold storage, and processing units. Provides subsidy for infrastructure development.",
+        "relevance_score": 0.9,
+        "section": "about"
+      },
+      {
+        "content": "Eligibility for Agricultural Marketing Infrastructure: Farmers, FPOs, cooperatives, and private entrepreneurs. Project should be economically viable and benefit farmers.",
+        "relevance_score": 0.9,
+        "section": "eligibility"
+      },
+      {
+        "content": "To apply for Agricultural Marketing Infrastructure: Submit project proposal to state agriculture marketing board. Required documents: Project report, land documents, registration certificate.",
+        "relevance_score": 0.9,
+        "section": "apply"
+      }
+    ]
+  },
+  "Crop Insurance Scheme": {
+    "scheme_name": "Crop Insurance Scheme",
+    "url": "https://pmfby.gov.in",
+    "details": [
+      {
+        "content": "Crop Insurance Scheme provides comprehensive insurance coverage against crop loss. Covers natural calamities, pests, diseases, and post-harvest losses with affordable premium.",
+        "relevance_score": 0.9,
+        "section": "about"
+      },
+      {
+        "content": "Eligibility for Crop Insurance Scheme: All farmers growing insured crops. Both loanee and non-loanee farmers eligible. Coverage available for all major crops.",
+        "relevance_score": 0.9,
+        "section": "eligibility"
+      },
+      {
+        "content": "To apply for Crop Insurance Scheme: Visit nearest bank, insurance company, or common service center. Required documents: Aadhaar card, land records, bank account, sowing details.",
+        "relevance_score": 0.9,
+        "section": "apply"
+      }
+    ]
+  },
+  "Farmer Producer Organization": {
+    "scheme_name": "Farmer Producer Organization",
+    "url": "https://www.nabard.org/fpo",
+    "details": [
+      {
+        "content": "Farmer Producer Organization (FPO) scheme promotes formation of farmer collectives for better market access and bargaining power. Financial support of ₹15 lakh per FPO over 3 years.",
+        "relevance_score": 0.9,
+        "section": "about"
+      },
+      {
+        "content": "Eligibility for Farmer Producer Organization: Minimum 300 farmers in plains and 100 in hilly areas required to form FPO. Should be registered under Companies Act or Cooperative Societies Act.",
+        "relevance_score": 0.9,
+        "section": "eligibility"
+      },
+      {
+        "content": "To form Farmer Producer Organization: Contact NABARD or state agriculture department. Required documents: Member list, registration certificate, bank account, business plan.",
+        "relevance_score": 0.9,
+        "section": "apply"
+      }
+    ]
+  }
+}

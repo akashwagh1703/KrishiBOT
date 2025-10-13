@@ -13,25 +13,31 @@ const DropdownCard = ({ data, field, context, onSelect }) => {
   }, []);
 
   const getOptions = () => {
+    if (!data || !Array.isArray(data)) return [];
+    
     if (field === 'scheme') {
-      return data.map(scheme => ({ value: scheme.id, label: scheme.title, icon: '📜' }));
+      return data.map(scheme => ({ value: scheme.name, label: scheme.name, icon: '📜' }));
     } else if (field === 'crop') {
       return data.map(item => ({ value: item, label: item, icon: '🌾' }));
     } else if (field === 'disease') {
       return data.map(item => ({ value: item, label: item, icon: '🦠' }));
+    } else if (field === 'chemical') {
+      return data.map(chem => ({ value: chem, label: chem.name, icon: '💊' }));
     }
     return [];
   };
 
   const options = getOptions();
   const filteredOptions = options.filter(opt => 
-    opt.label.toLowerCase().includes(searchTerm.toLowerCase())
+    opt?.label?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleSelect = (option) => {
     if (field === 'scheme') {
-      const scheme = data.find(s => s.id === option.value);
+      const scheme = data.find(s => s.name === option.value);
       if (scheme) onSelect(scheme);
+    } else if (field === 'chemical') {
+      onSelect(option.value);
     } else {
       onSelect(option.value);
     }
@@ -64,7 +70,8 @@ const DropdownCard = ({ data, field, context, onSelect }) => {
           <h3 className="text-base font-bold text-gray-900 dark:text-white text-center mb-2">
             {field === 'scheme' ? 'Select a Scheme' :
              field === 'crop' ? 'Select Your Crop' :
-             field === 'disease' ? 'Select Disease' : 'Select an Option'}
+             field === 'disease' ? 'Select Disease' :
+             field === 'chemical' ? 'Select Chemical' : 'Select an Option'}
           </h3>
         </div>
 

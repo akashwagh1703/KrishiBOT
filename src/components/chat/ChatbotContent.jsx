@@ -165,7 +165,7 @@ const ChatbotContent = () => {
 
   const handleSchemeSelection = async (scheme) => {
     const userMessage = {
-      text: `Tell me about ${scheme.title}`,
+      text: `Tell me about ${scheme.name}`,
       sender: 'user',
       timestamp: new Date().toISOString()
     };
@@ -174,35 +174,39 @@ const ChatbotContent = () => {
     await simulateTyping(1500);
 
     const botMessage = {
-      text: `You selected **${scheme.title}**\n\nWhat would you like to know?`,
+      text: `You selected **${scheme.name}**\n\nWhat would you like to know?`,
       sender: 'bot',
       timestamp: new Date().toISOString(),
       suggestions: [
-        { icon: '📋', text: 'About Scheme', action: `scheme-about-${scheme.id}` },
-        { icon: '✅', text: 'Eligibility', action: `scheme-eligibility-${scheme.id}` },
-        { icon: '📝', text: 'How to Apply', action: `scheme-apply-${scheme.id}` }
+        { icon: '📋', text: 'About Scheme', action: `scheme-about-${scheme.name}` },
+        { icon: '✅', text: 'Eligibility', action: `scheme-eligibility-${scheme.name}` },
+        { icon: '📝', text: 'How to Apply', action: `scheme-apply-${scheme.name}` }
       ]
     };
     addMessage(botMessage);
   };
 
-  const handleSchemeAction = async (action, schemeId) => {
+  const handleSchemeAction = async (action, schemeName) => {
     try {
-      const scheme = await schemesAPI.getDetails(schemeId);
-      if (!scheme) return;
+      const response = await schemesAPI.getDetails(schemeName);
+      if (!response) return;
 
+      const details = response.details || [];
       let responseText = '';
       let userText = '';
 
       if (action === 'about') {
         userText = 'Tell me about this scheme';
-        responseText = `**${scheme.title}**\n\n${scheme.fullDescription || scheme.shortDescription}\n\n**Benefits:** ${scheme.benefits}`;
+        const aboutContent = details.find(d => d.section === 'about');
+        responseText = `**${response.scheme_name || schemeName}**\n\n${aboutContent?.content || 'Information not available'}`;
       } else if (action === 'eligibility') {
         userText = 'Who is eligible?';
-        responseText = `**Eligibility for ${scheme.title}**\n\n${scheme.eligibility}\n\n**Required Documents:**\n${scheme.documents?.map((doc, i) => `${i + 1}. ${doc}`).join('\n') || 'Check official website'}`;
+        const eligibilityContent = details.find(d => d.section === 'eligibility');
+        responseText = `**Eligibility for ${response.scheme_name || schemeName}**\n\n${eligibilityContent?.content || 'Please visit the official website for eligibility details'}`;
       } else if (action === 'apply') {
         userText = 'How do I apply?';
-        responseText = `**How to Apply for ${scheme.title}**\n\n**Application Link:** ${scheme.applicationLink}\n\n**Steps:**\n1. Visit the official website\n2. Register/Login\n3. Fill application form\n4. Upload required documents\n5. Submit application\n\n**Deadline:** ${scheme.deadline || 'Check official website'}`;
+        const applyContent = details.find(d => d.section === 'apply');
+        responseText = `**How to Apply for ${response.scheme_name || schemeName}**\n\n${applyContent?.content || 'Please visit the official government portal for application details'}`;
       }
 
       addMessage({
@@ -217,8 +221,9 @@ const ChatbotContent = () => {
         text: responseText,
         sender: 'bot',
         timestamp: new Date().toISOString(),
+        button: response.url ? { text: 'Visit Official Website', url: response.url } : null,
         suggestions: [
-          { icon: '🔙', text: 'Back to Options', action: `scheme-back-${schemeId}` },
+          { icon: '🔙', text: 'Back to Options', action: `scheme-back-${schemeName}` },
           { icon: '🏠', text: 'Home', action: 'home' }
         ]
       });
@@ -268,59 +273,78 @@ const ChatbotContent = () => {
     };
     addMessage(userMessage);
 
-    await simulateTyping(1500);
+    await simulateTyping();
 
-    const botMessage = {
-      text: `You selected **${disease}** for ${crop}\n\nWhat information do you need?`,
-      sender: 'bot',
-      timestamp: new Date().toISOString(),
-      suggestions: [
-        { icon: '💊', text: 'Chemicals', action: `crop-chemicals-${crop}-${disease}` },
-        { icon: '🛡️', text: 'Plant Protection', action: `crop-protection-${crop}-${disease}` },
-        { icon: '🔙', text: 'Back', action: 'plant-protection' }
-      ]
-    };
-    addMessage(botMessage);
-  };
-
-  const handleCropAction = async (action, crop, disease) => {
     try {
-      let responseText = '';
-      let userText = '';
-
-      if (action === 'chemicals') {
-        userText = 'Show me chemical treatments';
-        const data = await plantProtectionAPI.getChemicals(crop, disease);
-        
-        if (data) {
-          responseText = `**Chemical Treatment for ${disease}**\n\n🦠 **Cause:** ${data.cause}\n⚠️ **Severity:** ${data.severity}\n\n💊 **Treatment:**\n${data.treatment?.map((t, i) => `${i + 1}. ${t}`).join('\n') || 'Consult agricultural expert'}`;
-        }
-      } else if (action === 'protection') {
-        userText = 'Show me plant protection methods';
-        const data = await plantProtectionAPI.getPlantProtection(crop, disease);
-        
-        if (data) {
-          responseText = `**Plant Protection for ${disease}**\n\n🛡️ **Prevention:**\n${data.prevention?.map((p, i) => `${i + 1}. ${p}`).join('\n') || 'Regular monitoring'}\n\n🌿 **Organic Treatment:**\n${data.organicTreatment?.map((t, i) => `${i + 1}. ${t}`).join('\n') || 'Neem oil spray'}`;
-        }
+      const data = await plantProtectionAPI.getChemicals(crop, disease);
+      
+      if (data?.chemicals && data.chemicals.length > 0) {
+        const botMessage = {
+          text: `Select a chemical to see detailed treatment information:`,
+          sender: 'bot',
+          timestamp: new Date().toISOString(),
+          card: { type: 'dropdown', data: data.chemicals, field: 'chemical', context: { crop, disease } }
+        };
+        addMessage(botMessage);
+      } else {
+        addMessage({
+          text: "No chemical treatments available for this disease.",
+          sender: 'bot',
+          timestamp: new Date().toISOString()
+        });
       }
-
+    } catch (error) {
       addMessage({
-        text: userText,
-        sender: 'user',
+        text: "Sorry, I couldn't load chemical information.",
+        sender: 'bot',
         timestamp: new Date().toISOString()
       });
+    }
+  };
 
-      await simulateTyping(1500);
+  const handleChemicalSelection = async (chemical, crop, disease) => {
+    const userMessage = {
+      text: `Tell me about ${chemical.name}`,
+      sender: 'user',
+      timestamp: new Date().toISOString()
+    };
+    addMessage(userMessage);
 
-      addMessage({
-        text: responseText || 'Information not available',
-        sender: 'bot',
-        timestamp: new Date().toISOString(),
-        suggestions: [
-          { icon: '🔙', text: 'Back to Options', action: `crop-back-${crop}-${disease}` },
-          { icon: '🏠', text: 'Home', action: 'home' }
-        ]
-      });
+    await simulateTyping(1500);
+
+    try {
+      const data = await plantProtectionAPI.getPlantProtection(crop, disease, chemical.name);
+      
+      if (data?.sections) {
+        const cropInfo = data.sections.crop_info || [];
+        const diseaseInfo = data.sections.disease_info || [];
+        
+        let responseText = `**Plant Protection Information**\n\n**Crop:** ${crop}\n**Disease:** ${disease}\n**Chemical:** ${chemical.name}\n\n`;
+        
+        if (diseaseInfo.length > 0) {
+          responseText += `🦠 **Disease Information:**\n${diseaseInfo[0]?.content || 'No information available'}\n\n`;
+        }
+        
+        if (cropInfo.length > 0) {
+          responseText += `🌾 **Crop Information:**\n${cropInfo[0]?.content || 'No information available'}`;
+        }
+        
+        addMessage({
+          text: responseText,
+          sender: 'bot',
+          timestamp: new Date().toISOString(),
+          suggestions: [
+            { icon: '🔙', text: 'Back', action: 'plant-protection' },
+            { icon: '🏠', text: 'Home', action: 'home' }
+          ]
+        });
+      } else {
+        addMessage({
+          text: 'Detailed information not available.',
+          sender: 'bot',
+          timestamp: new Date().toISOString()
+        });
+      }
     } catch (error) {
       addMessage({
         text: "Sorry, I couldn't fetch the information. Please try again.",
@@ -396,6 +420,7 @@ const ChatbotContent = () => {
                         if (message.card.field === 'scheme') handleSchemeSelection(value);
                         else if (message.card.field === 'crop') handleCropSelection(value);
                         else if (message.card.field === 'disease') handleDiseaseSelection(value, message.card.context.crop);
+                        else if (message.card.field === 'chemical') handleChemicalSelection(value, message.card.context.crop, message.card.context.disease);
                       }}
                     />
                   )}
@@ -423,16 +448,7 @@ const ChatbotContent = () => {
                       handleSchemeAction(actionType, schemeId);
                     }
                   } else if (action.startsWith('crop-')) {
-                    const parts = action.split('-');
-                    const actionType = parts[1];
-                    const crop = parts[2];
-                    const disease = parts.slice(3).join('-');
-                    
-                    if (actionType === 'back') {
-                      handleDiseaseSelection(disease, crop);
-                    } else {
-                      handleCropAction(actionType, crop, disease);
-                    }
+                    // Handle crop actions if needed
                   } else {
                     handleSuggestionClick(action);
                   }

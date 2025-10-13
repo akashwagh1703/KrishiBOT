@@ -10,16 +10,18 @@ const CropGrid = ({ crops, onSelect }) => {
     <div className={`${colors.gradientBr} from-white dark:from-gray-700 dark:to-gray-800 rounded-3xl p-6 shadow-2xl border-2 ${colors.borderPrimary} dark:border-green-600 animate-slide-up`}>
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
         {crops.map((crop, index) => {
-          const imageUrl = getCropImage(crop);
-          const emoji = getCropEmoji(crop);
-          const hasImageError = imageErrors[crop];
-          const isHovered = hoveredCrop === crop;
+          const cropName = typeof crop === 'string' ? crop : crop.name;
+          const cropImage = typeof crop === 'object' ? crop.image_url : null;
+          const imageUrl = cropImage || getCropImage(cropName);
+          const emoji = getCropEmoji(cropName);
+          const hasImageError = imageErrors[cropName];
+          const isHovered = hoveredCrop === cropName;
 
           return (
             <button
-              key={crop}
-              onClick={() => onSelect(crop)}
-              onMouseEnter={() => setHoveredCrop(crop)}
+              key={cropName}
+              onClick={() => onSelect(cropName)}
+              onMouseEnter={() => setHoveredCrop(cropName)}
               onMouseLeave={() => setHoveredCrop(null)}
               className={`group relative flex flex-col items-center p-4 bg-white dark:bg-gray-600 rounded-2xl hover:bg-gradient-to-br ${colors.hoverGradientLight} dark:hover:from-green-900/30 dark:hover:to-emerald-900/30 transition-all duration-300 border-2 border-gray-200 dark:border-gray-500 ${colors.borderPrimaryMid} dark:hover:border-green-500 hover:shadow-xl hover:scale-110 transform`}
               style={{ animationDelay: `${index * 50}ms` }}
@@ -30,9 +32,9 @@ const CropGrid = ({ crops, onSelect }) => {
                 {imageUrl && !hasImageError ? (
                   <img
                     src={imageUrl}
-                    alt={crop}
+                    alt={cropName}
                     className="w-full h-full object-cover rounded-xl shadow-md group-hover:shadow-lg transition-shadow"
-                    onError={() => setImageErrors(prev => ({ ...prev, [crop]: true }))}
+                    onError={() => setImageErrors(prev => ({ ...prev, [cropName]: true }))}
                   />
                 ) : (
                   <div className="text-5xl group-hover:scale-125 transition-transform duration-300">{emoji}</div>
@@ -45,7 +47,7 @@ const CropGrid = ({ crops, onSelect }) => {
               </div>
               
               <span className={`relative text-sm font-semibold text-gray-800 dark:text-gray-200 text-center ${colors.textPrimaryDark} dark:group-hover:text-green-400 transition-colors`}>
-                {crop}
+                {cropName}
               </span>
               
               <div className={`absolute bottom-0 left-0 right-0 h-1 ${colors.gradientPrimary} rounded-b-2xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300`}></div>
