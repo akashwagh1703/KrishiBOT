@@ -122,7 +122,7 @@ export const schemesAPI = {
     }
 
     try {
-      const response = await api.get('/v1/schemes/list');
+      const response = await api.get('schemes/list');
       setCache(cacheKey, response.data);
       return response.data;
     } catch (error) {
@@ -138,7 +138,7 @@ export const schemesAPI = {
     }
 
     try {
-      const response = await api.get(`/v1/schemes/details/${schemeName}`);
+      const response = await api.get(`schemes/details/${schemeName}`);
       return response.data;
     } catch (error) {
       console.error('Scheme details error:', error);
@@ -193,7 +193,7 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.get('/v1/crops/list');
+      const response = await api.get('crops/list');
       return response.data;
     } catch (error) {
       console.error('Crops API error:', error);
@@ -211,7 +211,7 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.get('/v1/crops/diseases', { params: { crop } });
+      const response = await api.get('crops/diseases', { params: { crop } });
       return response.data;
     } catch (error) {
       console.error('Diseases API error:', error);
@@ -229,7 +229,7 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.post('/v1/crops/chemicals', { crop, disease });
+      const response = await api.post('crops/chemicals', { crop, disease });
       return response.data;
     } catch (error) {
       console.error('Chemicals API error:', error);
@@ -247,7 +247,7 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.get('/v1/crops/plant-protection', { params: { crop, disease } });
+      const response = await api.get('crops/plant-protection', { params: { crop, disease } });
       return response.data;
     } catch (error) {
       console.error('Plant protection API error:', error);
@@ -267,7 +267,7 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.get('/v1/crops/plant-protection');
+      const response = await api.get('crops/plant-protection');
       setCache(cacheKey, response.data);
       return response.data;
     } catch (error) {
