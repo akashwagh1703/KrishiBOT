@@ -42,9 +42,21 @@
     "compact_mode": true
   },
   "languages": [
-    { "code": "en", "name": "English", "flag": "🇺🇸" },
-    { "code": "hi", "name": "हिंदी", "flag": "🇮🇳" },
-    { "code": "or", "name": "ଓଡ଼ିଆ", "flag": "OR" }
+    {
+      "code": "en",
+      "name": "English",
+      "flag": "🇺🇸"
+    },
+    {
+      "code": "hi",
+      "name": "हिंदी",
+      "flag": "🇮🇳"
+    },
+    {
+      "code": "or",
+      "name": "ଓଡ଼ିଆ",
+      "flag": "OR"
+    }
   ],
   "colors": {
     "primary": "green",

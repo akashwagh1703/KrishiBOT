@@ -28,14 +28,14 @@ const FloatingChatbot = () => {
         </div>
         <div className="flex items-center space-x-3">
           {config.branding.show_client_logos && config.branding.client_logos && (
-            <div className="hidden md:flex items-center space-x-3 mr-2 pr-3 border-r border-white/30">
+            <div className="flex items-center space-x-3 mr-2 pr-3 border-r border-white/30">
               {config.branding.client_logos.map((logo, index) => (
                 <img
                   key={index}
                   src={logo}
 
                   alt={`Client ${index + 1}`}
-                  className="h-12 w-auto object-contain p-1 bg-white opacity-80 hover:opacity-100 transition-opacity"
+                  className="h-12 w-auto object-contain p-1 bg-white hover:opacity-100 transition-opacity"
                 />
               ))}
             </div>

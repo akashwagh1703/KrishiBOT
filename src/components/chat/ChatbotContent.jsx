@@ -284,7 +284,7 @@ const ChatbotContent = () => {
             
             {message.card && (
               <div className="flex justify-start">
-                <div className="mt-2 ml-11 animate-fade-in max-w-2xl">
+                <div className="mt-2  animate-fade-in max-w-2xl">
                   {message.card.type === 'weather' && <WeatherCard data={message.card.data} />}
                   {message.card.type === 'scheme' && <SchemeCard data={message.card.data} />}
                   {message.card.type === 'crop-grid' && (
