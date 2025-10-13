@@ -49,9 +49,9 @@ const ChatbotContent = () => {
 
   const initializeChat = () => {
     const suggestions = [];
-    if (config.features.weather_module) suggestions.push({ icon: '☀️', text: 'Weather Info', action: 'weather' });
-    if (config.features.plant_protection_module) suggestions.push({ icon: '🛡️', text: 'Plant Protection', action: 'plant-protection' });
-    if (config.features.schemes_module) suggestions.push({ icon: '📜', text: 'Schemes', action: 'schemes' });
+    if (config.features.weather_module) suggestions.push({ icon: 'bx-sun', text: 'Weather Info', action: 'weather' });
+    if (config.features.plant_protection_module) suggestions.push({ icon: 'bx-shield', text: 'Plant Protection', action: 'plant-protection' });
+    if (config.features.schemes_module) suggestions.push({ icon: 'bx-file', text: 'Schemes', action: 'schemes' });
     // suggestions.push({ icon: '🌾', text: 'Select Crop', action: 'select-crop' });
 
     const welcomeMessage = {
@@ -178,9 +178,9 @@ const ChatbotContent = () => {
       sender: 'bot',
       timestamp: new Date().toISOString(),
       suggestions: [
-        { icon: '📋', text: 'About Scheme', action: `scheme-about-${scheme.name}` },
-        { icon: '✅', text: 'Eligibility', action: `scheme-eligibility-${scheme.name}` },
-        { icon: '📝', text: 'How to Apply', action: `scheme-apply-${scheme.name}` }
+        { icon: 'bx-info-circle', text: 'About Scheme', action: `scheme-about-${scheme.name}` },
+        { icon: 'bx-check-circle', text: 'Eligibility', action: `scheme-eligibility-${scheme.name}` },
+        { icon: 'bx-edit', text: 'How to Apply', action: `scheme-apply-${scheme.name}` }
       ]
     };
     addMessage(botMessage);
@@ -223,8 +223,8 @@ const ChatbotContent = () => {
         timestamp: new Date().toISOString(),
         button: response.url ? { text: 'Visit Official Website', url: response.url } : null,
         suggestions: [
-          { icon: '🔙', text: 'Back to Options', action: `scheme-back-${schemeName}` },
-          { icon: '🏠', text: 'Home', action: 'home' }
+          { icon: 'bx-arrow-back', text: 'Back to Options', action: `scheme-back-${schemeName}` },
+          { icon: 'bx-home', text: 'Home', action: 'home' }
         ]
       });
     } catch (error) {
@@ -334,8 +334,8 @@ const ChatbotContent = () => {
           sender: 'bot',
           timestamp: new Date().toISOString(),
           suggestions: [
-            { icon: '🔙', text: 'Back', action: 'plant-protection' },
-            { icon: '🏠', text: 'Home', action: 'home' }
+            { icon: 'bx-arrow-back', text: 'Back', action: 'plant-protection' },
+            { icon: 'bx-home', text: 'Home', action: 'home' }
           ]
         });
       } else {
@@ -380,9 +380,9 @@ const ChatbotContent = () => {
           text: s.text,
           action: s.action
         })) || [
-          { icon: '☀️', text: 'Weather', action: 'weather' },
-          { icon: '🛡️', text: 'Plant Protection', action: 'plant-protection' },
-          { icon: '📜', text: 'Schemes', action: 'schemes' }
+          { icon: 'bx-sun', text: 'Weather', action: 'weather' },
+          { icon: 'bx-shield', text: 'Plant Protection', action: 'plant-protection' },
+          { icon: 'bx-file', text: 'Schemes', action: 'schemes' }
         ]
       };
       addMessage(botMessage);

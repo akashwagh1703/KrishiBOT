@@ -251,7 +251,7 @@ export const plantProtectionAPI = {
     try {
       const params = { crop, disease };
       if (chemical) params.chemical = chemical;
-      const response = await api.get('/v1/crops/plant-protection', { params });
+      const response = await api.get('crops/plant-protection', { params });
       return response.data?.data || response.data;
     } catch (error) {
       console.error('Plant protection API error:', error);
