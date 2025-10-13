@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import config from '../../config/app.config.json';
+import { colors } from '../../utils/colors';
 
 const LoginScreen = ({ onSubmit }) => {
   const [mobile, setMobile] = useState('');
@@ -12,7 +13,7 @@ const LoginScreen = ({ onSubmit }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4">
+    <div className={`min-h-screen bg-gradient-to-br ${colors.bgPrimaryLight} via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4`}>
       <div className="w-full max-w-md">
         {/* Logo and Title */}
         {/* <div className="text-center mb-8 animate-fade-in">
@@ -30,7 +31,7 @@ const LoginScreen = ({ onSubmit }) => {
         {/* Login Card */}
         <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 animate-slide-up">
           <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className={`w-16 h-16 ${colors.bgPrimaryLight} bg-opacity-50 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4`}>
               <img src={config.branding.logo_icon} className="w-16 h-16" alt="Logo" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Welcome Back!</h2>
@@ -51,7 +52,7 @@ const LoginScreen = ({ onSubmit }) => {
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
                   placeholder="Enter 10 digit mobile number"
-                  className="w-full pl-16 pr-4 py-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900 dark:text-white text-lg transition-all"
+                  className={`w-full pl-16 pr-4 py-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-2xl focus:outline-none focus:ring-2 ${colors.ringPrimary} focus:border-transparent text-gray-900 dark:text-white text-lg transition-all`}
                   maxLength="10"
                   required
                 />
@@ -64,7 +65,7 @@ const LoginScreen = ({ onSubmit }) => {
             <button
               type="submit"
               disabled={mobile.length !== 10}
-              className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-2xl hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-4 focus:ring-green-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 shadow-lg"
+              className={`w-full py-4 ${colors.gradientPrimary} text-white font-semibold rounded-2xl ${colors.hoverGradient} focus:outline-none focus:ring-4 ${colors.ringPrimary} disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 shadow-lg`}
             >
               Send OTP
             </button>
@@ -76,8 +77,6 @@ const LoginScreen = ({ onSubmit }) => {
             </p>
           </div>
         </div>
-
-       
       </div>
     </div>
   );

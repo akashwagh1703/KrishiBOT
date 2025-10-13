@@ -2,7 +2,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useThemeStore } from '../../state/store';
 import LanguageSwitcher from '../ui/LanguageSwitcher';
 import ChatbotContent from './ChatbotContent';
-import config from "../../config/app.config.json"; // adjust the path as needed
+import config from "../../config/app.config.json";
+import { colors } from '../../utils/colors';
 
 
 const FloatingChatbot = () => {
@@ -11,8 +12,7 @@ const FloatingChatbot = () => {
 
   return (
     <div className="h-screen flex flex-col">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-4 flex items-center justify-between shadow-lg">
+      <div className={`${colors.gradientPrimary} p-4 flex items-center justify-between shadow-lg`}>
         <div className="flex items-center space-x-3">
           {config.branding.show_logo && (
             <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
@@ -41,7 +41,7 @@ const FloatingChatbot = () => {
             </div>
           )}
           {config.ui.language_switcher_enabled && (
-            <div className="[&>div>button]:bg-white/20 [&>div>button]:hover:bg-white/30 [&>div>button]:w-10 [&>div>button]:h-10 [&>div>div]:bg-white [&>div>div]:dark:bg-gray-800">
+            <div className="[&>div>button]:bg-white/20 [&>div>button]:hover:bg-white/30 [&>div>button]:w-10 [&>div>button]:h-10 [&>div>div]:bg-white">
               <LanguageSwitcher />
             </div>
           )}
@@ -55,16 +55,9 @@ const FloatingChatbot = () => {
             </button>
           )}
           {config.ui.profile_enabled && (
-            <button
-              onClick={toggleTheme}
-              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors"
-              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              <NavLink to="/profile" className="flex items-center ">
-                <i className="bx bx-user text-white text-xl"></i>
-                <span className="text-white"></span>
-              </NavLink>            </button>
-
+            <NavLink to="/profile" className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors">
+              <i className="bx bx-user text-white text-xl"></i>
+            </NavLink>
           )}
         </div>
       </div>

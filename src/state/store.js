@@ -56,4 +56,9 @@ export const useAppStore = create((set) => ({
   schemesCache: null,
   setWeatherCache: (data) => set({ weatherCache: data }),
   setSchemesCache: (data) => set({ schemesCache: data }),
+  
+  // Active dropdown management
+  activeDropdownId: null,
+  setActiveDropdown: (id) => set({ activeDropdownId: id }),
+  closeActiveDropdown: () => set({ activeDropdownId: null }),
 }));

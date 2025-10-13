@@ -65,7 +65,15 @@ function App() {
               </ProtectedRoute>
             } />
 
-            <Route path="/profile" element={<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 h-full overflow-y-auto"><Profile /></div>} />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <div className="h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-y-auto">
+                  <div className="p-6">
+                    <Profile />
+                  </div>
+                </div>
+              </ProtectedRoute>
+            } />
 
             <Route path="*" element={
               <Navigate to={localStorage.getItem('isAuthenticated') === 'true' ? '/chat' : '/login'} replace />

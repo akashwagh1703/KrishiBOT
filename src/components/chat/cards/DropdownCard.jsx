@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useAppStore } from '../../../state/store';
+import { colors } from '../../../utils/colors';
 
 const DropdownCard = ({ data, field, context, onSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [isOpen, setIsOpen] = useState(true);
+  const dropdownIdRef = useRef(`${field}-${Math.random()}`);
+  const { activeDropdownId, setActiveDropdown, closeActiveDropdown } = useAppStore();
+  const isOpen = activeDropdownId === dropdownIdRef.current;
+
+  useEffect(() => {
+    setActiveDropdown(dropdownIdRef.current);
+  }, []);
 
   const getOptions = () => {
     if (field === 'scheme') {
@@ -27,18 +35,18 @@ const DropdownCard = ({ data, field, context, onSelect }) => {
     } else {
       onSelect(option.value);
     }
-    setIsOpen(false);
+    closeActiveDropdown();
   };
 
   const handleClose = () => {
-    setIsOpen(false);
+    closeActiveDropdown();
   };
 
   if (!isOpen) return null;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 animate-slide-up-bottom">
-      <div className="bg-white dark:bg-gray-800 rounded-t-3xl shadow-2xl max-h-[40vh] overflow-hidden flex flex-col border-t-4 border-green-500 dark:border-green-400">
+      <div className={`bg-white dark:bg-gray-800 rounded-t-3xl shadow-2xl max-h-[40vh] overflow-hidden flex flex-col border-t-4 ${colors.borderPrimaryDark} dark:border-green-400`}>
         {/* Header */}
         <div className="px-4 pt-3 pb-2 border-b border-gray-200 dark:border-gray-700">
           <div className="flex justify-between items-center mb-2">
@@ -67,15 +75,15 @@ const DropdownCard = ({ data, field, context, onSelect }) => {
               <button
                 key={option.value}
                 onClick={() => handleSelect(option)}
-                className="w-full p-3 bg-white dark:bg-gray-700 rounded-xl hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-900/20 dark:hover:to-emerald-900/20 border-2 border-gray-200 dark:border-gray-600 hover:border-green-400 dark:hover:border-green-500 transition-all hover:shadow-md group flex items-center space-x-3"
+                className={`w-full p-3 bg-white dark:bg-gray-700 rounded-xl hover:bg-gradient-to-r ${colors.hoverGradientLight} dark:hover:from-green-900/20 dark:hover:to-emerald-900/20 border-2 border-gray-200 dark:border-gray-600 ${colors.borderPrimaryMid} dark:hover:border-green-500 transition-all hover:shadow-md group flex items-center space-x-3`}
               >
-                <div className="w-10 h-10 bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/50 dark:to-emerald-900/50 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                <div className={`w-10 h-10 bg-gradient-to-br ${colors.bgPrimaryLight} bg-opacity-50 to-emerald-100 dark:from-green-900/50 dark:to-emerald-900/50 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
                   <span className="text-xl">{option.icon}</span>
                 </div>
-                <span className="text-sm font-semibold text-gray-900 dark:text-white text-left flex-1 group-hover:text-green-600 dark:group-hover:text-green-400">
+                <span className={`text-sm font-semibold text-gray-900 dark:text-white text-left flex-1 ${colors.textPrimaryDark} dark:group-hover:text-green-400`}>
                   {option.label}
                 </span>
-                <i className="bx bx-chevron-right text-xl text-gray-400 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors"></i>
+                <i className={`bx bx-chevron-right text-xl text-gray-400 ${colors.textPrimaryDark} dark:group-hover:text-green-400 transition-colors`}></i>
               </button>
             ))
           ) : (

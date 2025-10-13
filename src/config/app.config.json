@@ -41,11 +41,21 @@
     "animations_enabled": true,
     "compact_mode": true
   },
+  "colors": {
+    "primary": "green",
+    "primary_shade": "500",
+    "primary_dark_shade": "600",
+    "secondary": "emerald",
+    "secondary_shade": "600",
+    "accent_shade": "400",
+    "light_shade": "50",
+    "border_shade": "200"
+  },
   "branding": {
     "app_name": "FamrutBot",
     "logo_icon": "/logo.png",
     "show_logo": true,
-    "show_name": true,
+    "show_name": false,
     "version": "v1.0.0",
     "client_logos": [
       "/client-logo-1.png",

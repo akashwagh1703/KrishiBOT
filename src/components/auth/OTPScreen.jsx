@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import config from '../../config/app.config.json';
+import { colors } from '../../utils/colors';
 
 const OTPScreen = ({ mobile, onSubmit, onResend }) => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -47,7 +48,7 @@ const OTPScreen = ({ mobile, onSubmit, onResend }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4">
+    <div className={`min-h-screen bg-gradient-to-br ${colors.bgPrimaryLight} via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4`}>
       <div className="w-full max-w-md">
         {/* Logo */}
         {/* <div className="text-center mb-8 animate-fade-in">
@@ -61,14 +62,14 @@ const OTPScreen = ({ mobile, onSubmit, onResend }) => {
         {/* OTP Card */}
         <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 animate-slide-up">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className={`w-16 h-16 ${colors.bgPrimaryLight} bg-opacity-50 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4`}>
                <img src={config.branding.logo_icon} className="w-16 h-16" alt="Logo" />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Verify OTP</h2>
             <p className="text-gray-600 dark:text-gray-400">
               Enter the 6-digit code sent to
             </p>
-            <p className="text-green-600 dark:text-green-400 font-semibold mt-1">
+            <p className={`${colors.textPrimaryDark} dark:text-green-400 font-semibold mt-1`}>
               +91 {mobile}
             </p>
           </div>
@@ -84,7 +85,7 @@ const OTPScreen = ({ mobile, onSubmit, onResend }) => {
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
-                className="w-14 h-14 text-center text-2xl font-bold bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-900 dark:text-white transition-all"
+                className={`w-14 h-14 text-center text-2xl font-bold bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-2xl focus:outline-none focus:ring-2 ${colors.ringPrimary} focus:border-transparent text-gray-900 dark:text-white transition-all`}
               />
             ))}
           </div>
@@ -93,12 +94,12 @@ const OTPScreen = ({ mobile, onSubmit, onResend }) => {
           <div className="text-center mb-6">
             {timer > 0 ? (
               <p className="text-gray-600 dark:text-gray-400">
-                Resend OTP in <span className="font-semibold text-green-600 dark:text-green-400">{timer}s</span>
+                Resend OTP in <span className={`font-semibold ${colors.textPrimaryDark} dark:text-green-400`}>{timer}s</span>
               </p>
             ) : (
               <button
                 onClick={handleResend}
-                className="text-green-600 dark:text-green-400 font-semibold hover:underline"
+                className={`${colors.textPrimaryDark} dark:text-green-400 font-semibold hover:underline`}
               >
                 Resend OTP
               </button>
@@ -108,7 +109,7 @@ const OTPScreen = ({ mobile, onSubmit, onResend }) => {
           <button
             onClick={() => onSubmit(otp.join(''))}
             disabled={otp.some(digit => digit === '')}
-            className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-2xl hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-4 focus:ring-green-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 shadow-lg"
+            className={`w-full py-4 ${colors.gradientPrimary} text-white font-semibold rounded-2xl ${colors.hoverGradient} focus:outline-none focus:ring-4 ${colors.ringPrimary} disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 shadow-lg`}
           >
             Verify & Continue
           </button>
