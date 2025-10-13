@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 const DropdownCard = ({ data, field, context, onSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [isOpen, setIsOpen] = useState(true);
 
   const getOptions = () => {
     if (field === 'scheme') {
@@ -26,46 +27,64 @@ const DropdownCard = ({ data, field, context, onSelect }) => {
     } else {
       onSelect(option.value);
     }
+    setIsOpen(false);
   };
 
-  return (
-    <div className="bg-white dark:bg-gray-700 rounded-2xl p-4 shadow-xl border-2 border-green-200 dark:border-green-600 animate-slide-up w-full">
-      {/* Compact Search */}
-      <div className="relative mb-3">
-        <i className="bx bx-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search..."
-          className="w-full pl-9 pr-3 py-2 bg-gray-50 dark:bg-gray-600 border border-gray-200 dark:border-gray-500 rounded-xl text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-      </div>
+  const handleClose = () => {
+    setIsOpen(false);
+  };
 
-      {/* Compact Grid */}
-      <div className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto custom-scrollbar">
-        {filteredOptions.length > 0 ? (
-          filteredOptions.map((option, index) => (
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed bottom-0 left-0 right-0 z-50 animate-slide-up-bottom">
+      <div className="bg-white dark:bg-gray-800 rounded-t-3xl shadow-2xl max-h-[40vh] overflow-hidden flex flex-col border-t-4 border-green-500 dark:border-green-400">
+        {/* Header */}
+        <div className="px-4 pt-3 pb-2 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex justify-between items-center mb-2">
+            <div className="flex-1 flex justify-center">
+              <div className="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+            </div>
             <button
-              key={option.value}
-              onClick={() => handleSelect(option)}
-              className="p-3 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-gray-600 dark:to-gray-700 rounded-xl hover:from-green-100 hover:to-emerald-100 dark:hover:from-green-900/40 dark:hover:to-emerald-900/40 border border-green-200 dark:border-gray-500 hover:border-green-400 transition-all hover:scale-105 hover:shadow-lg group"
-              style={{ animationDelay: `${index * 20}ms` }}
+              onClick={handleClose}
+              className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Close"
             >
-              <div className="flex flex-col items-center space-y-1">
-                <span className="text-3xl group-hover:scale-110 transition-transform">{option.icon}</span>
-                <span className="text-xs font-semibold text-gray-800 dark:text-gray-200 text-center line-clamp-2 group-hover:text-green-600 dark:group-hover:text-green-400">
+              <i className="bx bx-x text-2xl text-gray-500 dark:text-gray-400"></i>
+            </button>
+          </div>
+          <h3 className="text-base font-bold text-gray-900 dark:text-white text-center mb-2">
+            {field === 'scheme' ? 'Select a Scheme' :
+             field === 'crop' ? 'Select Your Crop' :
+             field === 'disease' ? 'Select Disease' : 'Select an Option'}
+          </h3>
+        </div>
+
+        {/* List View */}
+        <div className="px-4 py-3 space-y-2 overflow-y-auto custom-scrollbar flex-1">
+          {filteredOptions.length > 0 ? (
+            filteredOptions.map((option, index) => (
+              <button
+                key={option.value}
+                onClick={() => handleSelect(option)}
+                className="w-full p-3 bg-white dark:bg-gray-700 rounded-xl hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 dark:hover:from-green-900/20 dark:hover:to-emerald-900/20 border-2 border-gray-200 dark:border-gray-600 hover:border-green-400 dark:hover:border-green-500 transition-all hover:shadow-md group flex items-center space-x-3"
+              >
+                <div className="w-10 h-10 bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/50 dark:to-emerald-900/50 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <span className="text-xl">{option.icon}</span>
+                </div>
+                <span className="text-sm font-semibold text-gray-900 dark:text-white text-left flex-1 group-hover:text-green-600 dark:group-hover:text-green-400">
                   {option.label}
                 </span>
-              </div>
-            </button>
-          ))
-        ) : (
-          <div className="col-span-2 text-center py-6">
-            <i className="bx bx-search-alt text-3xl text-gray-300 dark:text-gray-600"></i>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">No results</p>
-          </div>
-        )}
+                <i className="bx bx-chevron-right text-xl text-gray-400 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors"></i>
+              </button>
+            ))
+          ) : (
+            <div className="text-center py-8">
+              <i className="bx bx-search-alt text-4xl text-gray-300 dark:text-gray-600 mb-2"></i>
+              <p className="text-sm text-gray-500 dark:text-gray-400">No results found</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

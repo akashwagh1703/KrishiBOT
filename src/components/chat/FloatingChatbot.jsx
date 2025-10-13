@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useThemeStore } from '../../state/store';
 import LanguageSwitcher from '../ui/LanguageSwitcher';
 import ChatbotContent from './ChatbotContent';
@@ -30,12 +30,12 @@ const FloatingChatbot = () => {
           {config.branding.show_client_logos && config.branding.client_logos && (
             <div className="hidden md:flex items-center space-x-3 mr-2 pr-3 border-r border-white/30">
               {config.branding.client_logos.map((logo, index) => (
-                <img 
-                  key={index} 
-                  src={logo} 
-             
-                  alt={`Client ${index + 1}`} 
-                  className="h-12 w-auto object-contain p-1 bg-white opacity-80 hover:opacity-100 transition-opacity" 
+                <img
+                  key={index}
+                  src={logo}
+
+                  alt={`Client ${index + 1}`}
+                  className="h-12 w-auto object-contain p-1 bg-white opacity-80 hover:opacity-100 transition-opacity"
                 />
               ))}
             </div>
@@ -46,13 +46,25 @@ const FloatingChatbot = () => {
             </div>
           )}
           {config.ui.theme_toggle_enabled && (
-            <button 
+            <button
               onClick={toggleTheme}
               className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors"
               aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               <i className={`bx ${isDark ? 'bx-sun' : 'bx-moon'} text-white text-xl`}></i>
             </button>
+          )}
+          {config.ui.profile_enabled && (
+            <button
+              onClick={toggleTheme}
+              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors"
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              <NavLink to="/profile" className="flex items-center ">
+                <i className="bx bx-user text-white text-xl"></i>
+                <span className="text-white"></span>
+              </NavLink>            </button>
+
           )}
         </div>
       </div>

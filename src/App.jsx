@@ -7,6 +7,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import FloatingChatbot from './components/chat/FloatingChatbot';
 
 import { Suspense } from 'react';
+import Profile from './routes/Profile';
 
 function App() {
   const { isDark } = useThemeStore();
@@ -63,6 +64,9 @@ function App() {
                 <FloatingChatbot />
               </ProtectedRoute>
             } />
+
+            <Route path="/profile" element={<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 h-full overflow-y-auto"><Profile /></div>} />
+
             <Route path="*" element={
               <Navigate to={localStorage.getItem('isAuthenticated') === 'true' ? '/chat' : '/login'} replace />
             } />
