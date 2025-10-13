@@ -141,10 +141,30 @@
       "dosage": "As per label"
     }
   ],
+  "plant_protection_details": {
+    "crop": "Sample Crop",
+    "disease": "Sample Disease",
+    "chemical": "Sample Chemical",
+    "sections": {
+      "crop_info": [
+        {
+          "content": "This is sample crop information. The pest affects the crop by damaging leaves and stems. Apply recommended pesticides at proper intervals.",
+          "relevance_score": 0.9
+        }
+      ],
+      "disease_info": [
+        {
+          "content": "This is sample disease information. Symptoms include yellowing of leaves and stunted growth. Treatment involves application of appropriate chemicals.",
+          "relevance_score": 0.9
+        }
+      ],
+      "treatment": [],
+      "prevention": []
+    }
+  },
   "symptoms": [
     "Yellow leaves", "Brown spots", "Wilting", "Stunted growth", "Holes in leaves", "White powder on leaves", "Black spots", "Curled leaves", "Root rot", "Fruit drop"
   ],
- 
   "preventiveTips": [
     "Practice crop rotation to break pest cycles",
     "Maintain field hygiene by removing crop residues",

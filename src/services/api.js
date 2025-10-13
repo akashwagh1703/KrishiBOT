@@ -240,10 +240,12 @@ export const plantProtectionAPI = {
   async getPlantProtection(crop, disease, chemical) {
     if (config.api.use_mock_data) {
       await new Promise(resolve => setTimeout(resolve, 500));
-      const diagnosis = plantProtectionData.diagnoses.find(
-        d => d.crop === crop && d.disease === disease
-      );
-      return diagnosis || null;
+      return {
+        crop,
+        disease,
+        chemical,
+        sections: plantProtectionData.plant_protection_details.sections
+      };
     }
 
     try {
