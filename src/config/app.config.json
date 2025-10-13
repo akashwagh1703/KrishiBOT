@@ -41,6 +41,11 @@
     "animations_enabled": true,
     "compact_mode": true
   },
+  "languages": [
+    { "code": "en", "name": "English", "flag": "🇺🇸" },
+    { "code": "hi", "name": "हिंदी", "flag": "🇮🇳" },
+    { "code": "or", "name": "ଓଡ଼ିଆ", "flag": "OR" }
+  ],
   "colors": {
     "primary": "green",
     "primary_shade": "500",
@@ -55,7 +60,7 @@
     "app_name": "FamrutBot",
     "logo_icon": "/logo.png",
     "show_logo": true,
-    "show_name": false,
+    "show_name": true,
     "version": "v1.0.0",
     "client_logos": [
       "/client-logo-1.png",

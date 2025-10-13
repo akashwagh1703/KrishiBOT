@@ -1,8 +1,10 @@
+import { colors } from "../../../utils/colors";
+
 const SchemeCard = ({ data }) => {
   return (
     <div className="bg-white dark:bg-gray-700 rounded-2xl p-4 shadow-lg border border-gray-200 dark:border-gray-600 animate-slide-up">
       <div className="flex items-start space-x-3 mb-3">
-        <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div className={`w-10 h-10 ${colors.gradientPrimary} rounded-lg flex items-center justify-center flex-shrink-0`}>
           <i className="bx bx-building text-white text-xl"></i>
         </div>
         <div className="flex-1">
@@ -41,7 +43,7 @@ const SchemeCard = ({ data }) => {
         href={data.applicationLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-4 w-full flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg transition-transform"
+        className={`mt-4 w-full flex items-center justify-center space-x-2 px-4 py-2 ${colors.gradientPrimary} text-white rounded-lg transition-transform`}
       >
         <i className="bx bx-link-external"></i>
         <span>Apply Online</span>

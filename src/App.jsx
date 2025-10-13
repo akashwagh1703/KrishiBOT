@@ -68,9 +68,9 @@ function App() {
             <Route path="/profile" element={
               <ProtectedRoute>
                 <div className="h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-y-auto">
-                  <div className="p-6">
+                  
                     <Profile />
-                  </div>
+               
                 </div>
               </ProtectedRoute>
             } />

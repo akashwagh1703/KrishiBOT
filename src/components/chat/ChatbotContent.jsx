@@ -7,6 +7,7 @@ import SchemeCard from './cards/SchemeCard';
 import CropGrid from './cards/CropGrid';
 import DropdownCard from './cards/DropdownCard';
 import { weatherAPI, schemesAPI, plantProtectionAPI } from '../../services/api';
+import { useAppStore } from '../../state/store';
 import config from '../../config/app.config.json';
 
 const ChatbotContent = () => {
@@ -17,6 +18,7 @@ const ChatbotContent = () => {
   const messagesEndRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const { closeActiveDropdown } = useAppStore();
 
   useEffect(() => {
     initializeChat();
@@ -69,6 +71,7 @@ const ChatbotContent = () => {
   };
 
   const handleSuggestionClick = async (action) => {
+    closeActiveDropdown();
     const userMessage = {
       text: action.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()),
       sender: 'user',

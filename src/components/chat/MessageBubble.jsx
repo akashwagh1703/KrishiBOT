@@ -1,3 +1,6 @@
+import config from "../../config/app.config.json";
+import { colors } from '../../utils/colors';
+
 const MessageBubble = ({ message }) => {
   const isBot = message.sender === 'bot';
 
@@ -6,10 +9,10 @@ const MessageBubble = ({ message }) => {
       <div className={`max-w-2xl ${isBot ? 'order-2' : 'order-1'}`}>
         {isBot && (
           <div className="flex items-center space-x-2 mb-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
+            <div className={`w-8 h-8 ${colors.gradientPrimary} rounded-full flex items-center justify-center`}>
               <i className="bx bx-bot text-white text-sm"></i>
             </div>
-            <span className="text-sm font-medium text-gray-600 dark:text-gray-400">KrishiBot</span>
+            <span className="text-sm font-medium text-gray-600 dark:text-gray-400">{config.branding.app_name}</span>
           </div>
         )}
         
@@ -17,7 +20,7 @@ const MessageBubble = ({ message }) => {
           className={`px-5 py-4 rounded-2xl shadow-soft ${
             isBot
               ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-tl-none'
-              : 'bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-tr-none'
+              : `${colors.gradientPrimary} text-white rounded-tr-none`
           }`}
         >
           <div className="text-sm whitespace-pre-wrap">

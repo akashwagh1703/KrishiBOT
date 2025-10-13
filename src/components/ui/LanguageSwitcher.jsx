@@ -1,15 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { useLanguageStore } from '../../state/store';
-import { config } from '../../config';
+import config from '../../config/app.config.json';
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
   const { language, setLanguage } = useLanguageStore();
 
-  const languages = [
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'hi', name: 'हिंदी', flag: '🇮🇳' }
-  ];
+  const languages = config.languages;
 
   const handleLanguageChange = (langCode) => {
     i18n.changeLanguage(langCode);
