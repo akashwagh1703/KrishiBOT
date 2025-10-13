@@ -33,7 +33,7 @@
     "show_input_section": false,
     "show_emoji_button": false,
     "show_voice_button": false,
-    "show_send_button": false
+    "show_send_button": true
   },
   "appearance": {
     "default_theme": "light",

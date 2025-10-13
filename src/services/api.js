@@ -122,7 +122,7 @@ export const schemesAPI = {
     }
 
     try {
-      const response = await api.get('schemes/list');
+      const response = await api.get('/v1/schemes/list');
       setCache(cacheKey, response.data);
       return response.data;
     } catch (error) {
@@ -138,7 +138,7 @@ export const schemesAPI = {
     }
 
     try {
-      const response = await api.get(`schemes/details/${schemeName}`);
+      const response = await api.get(`/v1/schemes/details/${schemeName}`);
       return response.data;
     } catch (error) {
       console.error('Scheme details error:', error);
@@ -193,7 +193,7 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.get('crops/list');
+      const response = await api.get('/v1/crops/list');
       return response.data;
     } catch (error) {
       console.error('Crops API error:', error);
@@ -211,7 +211,7 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.get('crops/diseases', { params: { crop } });
+      const response = await api.get('/v1/crops/diseases', { params: { crop } });
       return response.data;
     } catch (error) {
       console.error('Diseases API error:', error);
@@ -229,7 +229,7 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.post('crops/chemicals', { crop, disease });
+      const response = await api.post('/v1/crops/chemicals', { crop, disease });
       return response.data;
     } catch (error) {
       console.error('Chemicals API error:', error);
@@ -247,7 +247,7 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.get('crops/plant-protection', { params: { crop, disease } });
+      const response = await api.get('/v1/crops/plant-protection', { params: { crop, disease } });
       return response.data;
     } catch (error) {
       console.error('Plant protection API error:', error);
@@ -267,7 +267,7 @@ export const plantProtectionAPI = {
     }
 
     try {
-      const response = await api.get('crops/plant-protection');
+      const response = await api.get('/v1/crops/plant-protection');
       setCache(cacheKey, response.data);
       return response.data;
     } catch (error) {
@@ -277,18 +277,73 @@ export const plantProtectionAPI = {
   }
 };
 
+// Chatbot API for unguided flow
+export const chatbotAPI = {
+  async ask(question, context = {}) {
+    if (config.api.use_mock_data) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return {
+        answer: "I'm here to help! Please use the suggestion buttons or menu options to navigate through different features like Weather, Schemes, and Plant Protection.",
+        suggestions: [
+          { text: 'Weather Info', action: 'weather' },
+          { text: 'Schemes', action: 'schemes' },
+          { text: 'Plant Protection', action: 'plant-protection' }
+        ]
+      };
+    }
+
+    try {
+      const response = await api.post('/v1/chatbot/ask', { question, context });
+      return response.data;
+    } catch (error) {
+      console.error('Chatbot API error:', error);
+      return {
+        answer: "I'm having trouble understanding. Please try using the menu options.",
+        suggestions: []
+      };
+    }
+  }
+};
+
 // Authentication API
 export const authAPI = {
-  login(mobile) {
-    const userData = { mobile, timestamp: Date.now() };
-    localStorage.setItem('user_data', JSON.stringify(userData));
-    localStorage.setItem('is_authenticated', 'true');
-    return userData;
+  async sendOTP(mobile_no) {
+    if (config.api.use_mock_data) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const userData = { mobile_no, timestamp: Date.now() };
+      localStorage.setItem('user_data', JSON.stringify(userData));
+      return { success: true, message: 'OTP sent successfully' };
+    }
+
+    try {
+      const response = await api.post('/v1/login/send-login-otp', { mobile_no });
+      const userData = { mobile_no, timestamp: Date.now() };
+      localStorage.setItem('user_data', JSON.stringify(userData));
+      return response.data;
+    } catch (error) {
+      console.error('Send OTP error:', error);
+      throw error;
+    }
   },
 
-  verifyOTP(otp) {
-    localStorage.setItem('is_authenticated', 'true');
-    return { success: true };
+  async verifyOTP(mobile_no, otp) {
+    if (config.api.use_mock_data) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      localStorage.setItem('is_authenticated', 'true');
+      return { success: true, token: 'mock_token' };
+    }
+
+    try {
+      const response = await api.post('/v1/login/verify-login-otp', { mobile_no, otp });
+      if (response.data.token) {
+        localStorage.setItem('auth_token', response.data.token);
+      }
+      localStorage.setItem('is_authenticated', 'true');
+      return response.data;
+    } catch (error) {
+      console.error('Verify OTP error:', error);
+      throw error;
+    }
   },
 
   logout() {

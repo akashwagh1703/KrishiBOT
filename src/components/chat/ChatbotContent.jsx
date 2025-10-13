@@ -6,7 +6,7 @@ import WeatherCard from './cards/WeatherCard';
 import SchemeCard from './cards/SchemeCard';
 import CropGrid from './cards/CropGrid';
 import DropdownCard from './cards/DropdownCard';
-import { weatherAPI, schemesAPI, plantProtectionAPI } from '../../services/api';
+import { weatherAPI, schemesAPI, plantProtectionAPI, chatbotAPI } from '../../services/api';
 import { useAppStore } from '../../state/store';
 import { colors } from '../../utils/colors';
 import config from '../../config/app.config.json';
@@ -339,23 +339,36 @@ const ChatbotContent = () => {
       timestamp: new Date().toISOString()
     };
     addMessage(userMessage);
+    const question = inputValue;
     setInputValue('');
 
     await simulateTyping();
 
-    const botMessage = {
-      text: "I'm here to help! Please use the suggestion buttons or menu options to navigate through different features.",
-      sender: 'bot',
-      timestamp: new Date().toISOString(),
-      suggestions: [
-        { icon: '🌾', text: 'Select Crop', action: 'select-crop' },
-        { icon: '☀️', text: 'Weather', action: 'weather' },
-        { icon: '🛡️', text: 'Plant Protection', action: 'plant-protection' },
-
-        { icon: '📜', text: 'Schemes', action: 'schemes' }
-      ]
-    };
-    addMessage(botMessage);
+    try {
+      const response = await chatbotAPI.ask(question, { messages });
+      
+      const botMessage = {
+        text: response.answer || "I'm here to help! Please use the suggestion buttons or menu options.",
+        sender: 'bot',
+        timestamp: new Date().toISOString(),
+        suggestions: response.suggestions?.map(s => ({
+          icon: s.icon || '💬',
+          text: s.text,
+          action: s.action
+        })) || [
+          { icon: '☀️', text: 'Weather', action: 'weather' },
+          { icon: '🛡️', text: 'Plant Protection', action: 'plant-protection' },
+          { icon: '📜', text: 'Schemes', action: 'schemes' }
+        ]
+      };
+      addMessage(botMessage);
+    } catch (error) {
+      addMessage({
+        text: "Sorry, I'm having trouble responding. Please try again.",
+        sender: 'bot',
+        timestamp: new Date().toISOString()
+      });
+    }
   };
 
   return (
