@@ -11,6 +11,8 @@ const SchemesPage = () => {
   const [messages, setMessages] = useState([]);
   const [selectedScheme, setSelectedScheme] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -21,6 +23,11 @@ const SchemesPage = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  const filteredSchemes = schemes.filter(scheme =>
+    scheme.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    scheme.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -178,44 +185,134 @@ const SchemesPage = () => {
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             <i className="bx bx-list-ul mr-2"></i>Select a Government Scheme:
           </label>
-          <select
-            onChange={(e) => {
-              const scheme = schemes.find(s => s.id === e.target.value);
-              if (scheme) handleSchemeSelection(scheme);
-            }}
-            className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            defaultValue=""
+          
+          <button
+            onClick={() => setIsDropdownOpen(true)}
+            className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-left text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 transition-all flex items-center justify-between min-h-[48px]"
           >
-            <option value="" disabled>Choose a scheme...</option>
-            {schemes.map((scheme) => (
-              <option key={scheme.id} value={scheme.id}>
-                {scheme.title}
-              </option>
-            ))}
-          </select>
+            <span className={selectedScheme ? 'font-medium text-sm' : 'text-gray-500 dark:text-gray-400 text-sm'}>
+              {selectedScheme ? selectedScheme.title : 'Choose a scheme...'}
+            </span>
+            <i className="bx bx-chevron-down text-xl"></i>
+          </button>
         </div>
         
         {selectedScheme && (
           <div className="flex gap-2">
             <button
-              onClick={() => {
-                setMessages([]);
-                setSelectedScheme(null);
-                initializeChat();
-              }}
-              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-700 dark:text-gray-200 rounded-xl text-sm transition-colors"
+              onClick={() => setIsDropdownOpen(true)}
+              className="flex-1 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-xl text-sm transition-colors font-medium"
             >
-              <i className="bx bx-refresh mr-1"></i>New Chat
+              <i className="bx bx-refresh mr-1"></i>Change Scheme
             </button>
             <button
               onClick={() => handleSchemeSelection(selectedScheme)}
-              className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-xl text-sm transition-colors"
+              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-700 dark:text-gray-200 rounded-xl text-sm transition-colors"
             >
-              <i className="bx bx-info-circle mr-1"></i>More Details
+              <i className="bx bx-info-circle mr-1"></i>Details
             </button>
           </div>
         )}
       </div>
+
+      {/* Bottom Sheet Dropdown */}
+      {isDropdownOpen && (
+        <>
+          <div 
+            className="fixed inset-0 bg-black/40 z-40"
+            onClick={() => {
+              setIsDropdownOpen(false);
+              setSearchQuery('');
+            }}
+          />
+          <div className="fixed inset-x-0 bottom-0 bg-white dark:bg-gray-800 rounded-t-2xl z-50 max-h-[85vh] flex flex-col shadow-2xl animate-slideUp">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Select Scheme</h3>
+              <button
+                onClick={() => {
+                  setIsDropdownOpen(false);
+                  setSearchQuery('');
+                }}
+                className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
+              >
+                <i className="bx bx-x text-2xl text-gray-500 dark:text-gray-400"></i>
+              </button>
+            </div>
+
+            {/* Search */}
+            <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+              <div className="relative">
+                <i className="bx bx-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                <input
+                  type="text"
+                  placeholder="Search schemes..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+            </div>
+
+            {/* Scrollable List */}
+            <div className="flex-1 overflow-y-auto p-3">
+              {filteredSchemes.length > 0 ? (
+                <div className="space-y-2">
+                  {filteredSchemes.map((scheme) => (
+                    <button
+                      key={scheme.id}
+                      onClick={() => {
+                        handleSchemeSelection(scheme);
+                        setIsDropdownOpen(false);
+                        setSearchQuery('');
+                      }}
+                      className={`w-full p-3.5 text-left rounded-xl transition-all ${
+                        selectedScheme?.id === scheme.id 
+                          ? 'bg-green-500 shadow-lg' 
+                          : 'bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 shadow-sm'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-11 h-11 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                          selectedScheme?.id === scheme.id
+                            ? 'bg-white/20'
+                            : 'bg-green-500'
+                        }`}>
+                          <i className="bx bx-building text-white text-xl"></i>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className={`font-semibold text-sm mb-0.5 ${
+                            selectedScheme?.id === scheme.id
+                              ? 'text-white'
+                              : 'text-gray-900 dark:text-white'
+                          }`}>
+                            {scheme.title}
+                          </p>
+                          <p className={`text-xs line-clamp-1 ${
+                            selectedScheme?.id === scheme.id
+                              ? 'text-white/80'
+                              : 'text-gray-500 dark:text-gray-400'
+                          }`}>
+                            {scheme.description}
+                          </p>
+                        </div>
+                        {selectedScheme?.id === scheme.id && (
+                          <i className="bx bxs-check-circle text-white text-2xl"></i>
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <i className="bx bx-search-alt text-4xl text-gray-300 dark:text-gray-600 mb-2"></i>
+                  <p className="text-gray-500 dark:text-gray-400">No schemes found</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
