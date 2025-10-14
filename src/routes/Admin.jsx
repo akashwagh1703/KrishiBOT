@@ -255,6 +255,16 @@ const Admin = () => {
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{settings.branding.version}</p>
         </div>
         <nav className="flex-1 p-4 space-y-1">
+          <button
+            onClick={() => navigate('/admin/apps')}
+            className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          >
+            <i className="bx bx-grid-alt text-xl"></i>
+            <span className="font-medium">Apps</span>
+          </button>
+          <div className="pt-2 pb-2 px-2">
+            <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider">Global Settings</p>
+          </div>
           {tabs.map(tab => (
             <button
               key={tab.id}

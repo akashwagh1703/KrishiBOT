@@ -11,6 +11,8 @@ import { Suspense } from 'react';
 import Profile from './routes/Profile';
 import Admin from './routes/Admin';
 import AdminLogin from './routes/AdminLogin';
+import AdminApps from './routes/AdminApps';
+import AdminAppConfig from './routes/AdminAppConfig';
 import AdminProtectedRoute from './components/auth/AdminProtectedRoute';
 
 function App() {
@@ -78,6 +80,21 @@ function App() {
             } />
             <Route path="/admin-login" element={<AdminLogin />} />
             <Route path="/admin" element={
+              <AdminProtectedRoute>
+                <Admin />
+              </AdminProtectedRoute>
+            } />
+            <Route path="/admin/apps" element={
+              <AdminProtectedRoute>
+                <AdminApps />
+              </AdminProtectedRoute>
+            } />
+            <Route path="/admin/apps/:appId/config" element={
+              <AdminProtectedRoute>
+                <AdminAppConfig />
+              </AdminProtectedRoute>
+            } />
+            <Route path="/admin/settings" element={
               <AdminProtectedRoute>
                 <Admin />
               </AdminProtectedRoute>
