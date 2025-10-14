@@ -9,6 +9,9 @@ import FloatingChatbot from './components/chat/FloatingChatbot';
 
 import { Suspense } from 'react';
 import Profile from './routes/Profile';
+import Admin from './routes/Admin';
+import AdminLogin from './routes/AdminLogin';
+import AdminProtectedRoute from './components/auth/AdminProtectedRoute';
 
 function App() {
   const { isDark } = useThemeStore();
@@ -72,6 +75,12 @@ function App() {
                   <Profile />
                 </div>
               </ProtectedRoute>
+            } />
+            <Route path="/admin-login" element={<AdminLogin />} />
+            <Route path="/admin" element={
+              <AdminProtectedRoute>
+                <Admin />
+              </AdminProtectedRoute>
             } />
             <Route path="*" element={
               <Navigate to={localStorage.getItem('is_authenticated') === 'true' ? '/chat' : '/login'} replace />
