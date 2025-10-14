@@ -4,10 +4,21 @@ import { colors } from '../../utils/colors';
 
 const LoginScreen = ({ onSubmit }) => {
   const [mobile, setMobile] = useState('');
+  const [appId, setAppId] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (mobile.length === 10) {
+    if (mobile.length === 10 && appId.trim()) {
+      // Check if app exists
+      const apps = JSON.parse(localStorage.getItem('admin_apps') || '[]');
+      const appExists = apps.some(app => app.app_id === appId);
+      
+      if (!appExists) {
+        alert('Invalid App ID. Please check and try again.');
+        return;
+      }
+      
+      localStorage.setItem('app_id', appId);
       onSubmit(mobile);
     }
   };
@@ -41,6 +52,19 @@ const LoginScreen = ({ onSubmit }) => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                App ID
+              </label>
+              <input
+                type="text"
+                value={appId}
+                onChange={(e) => setAppId(e.target.value)}
+                placeholder="Enter your App ID"
+                className={`w-full px-4 py-4 bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-2xl focus:outline-none focus:ring-2 ${colors.ringPrimary} focus:border-transparent text-gray-900 dark:text-white text-lg transition-all`}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Mobile Number
               </label>
               <div className="relative">
@@ -64,7 +88,7 @@ const LoginScreen = ({ onSubmit }) => {
 
             <button
               type="submit"
-              disabled={mobile.length !== 10}
+              disabled={mobile.length !== 10 || !appId.trim()}
               className={`w-full py-4 ${colors.gradientPrimary} text-white font-semibold rounded-2xl ${colors.hoverGradient} focus:outline-none focus:ring-4 ${colors.ringPrimary} disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 shadow-lg`}
             >
               Send OTP

@@ -4,13 +4,14 @@ import LanguageSwitcher from '../ui/LanguageSwitcher';
 import ChatbotContent from './ChatbotContent';
 import { authAPI } from '../../services/api';
 import toast from 'react-hot-toast';
-import config from "../../config/app.config.json";
+import { useAppConfig } from '../../hooks/useAppConfig';
 import { colors } from '../../utils/colors';
 
 
 const FloatingChatbot = () => {
   const navigate = useNavigate();
   const { isDark, toggleTheme } = useThemeStore();
+  const config = useAppConfig();
 
   const handleLogout = () => {
     toast((t) => (

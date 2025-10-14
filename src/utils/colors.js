@@ -1,6 +1,15 @@
-import config from '../config/app.config.json';
+import defaultConfig from '../config/app.config.json';
+import { configService } from '../services/configService';
 
-const c = config.colors;
+const getConfig = () => {
+  try {
+    return configService.getCurrentConfig();
+  } catch {
+    return defaultConfig;
+  }
+};
+
+const c = getConfig().colors;
 const p = c.primary;
 const s = c.secondary;
 
