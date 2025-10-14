@@ -442,7 +442,7 @@ const ChatbotContent = () => {
                     
                     if (actionType === 'back') {
                       schemesAPI.getDetails(schemeId).then(scheme => {
-                        if (scheme) handleSchemeSelection(scheme);
+                        if (scheme) handleSchemeSelection({ name: scheme.scheme_name || schemeId });
                       });
                     } else {
                       handleSchemeAction(actionType, schemeId);
