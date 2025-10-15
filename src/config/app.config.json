@@ -34,7 +34,9 @@
     "show_input_section": false,
     "show_emoji_button": false,
     "show_voice_button": false,
-    "show_send_button": true
+    "show_send_button": true,
+    "show_speaker_button": true,
+    "show_like_dislike": true
   },
   "appearance": {
     "default_theme": "light",

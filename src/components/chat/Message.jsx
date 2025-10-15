@@ -1,11 +1,35 @@
+import { useState } from 'react';
 import classNames from 'classnames';
+import { config } from '../../config';
 
 const Message = ({ message, isBot = false }) => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [feedback, setFeedback] = useState(null);
+  
   const formatTime = (timestamp) => {
     return new Date(timestamp).toLocaleTimeString('en-US', {
       hour: '2-digit',
       minute: '2-digit'
     });
+  };
+
+  const handleSpeak = () => {
+    if ('speechSynthesis' in window) {
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        setIsSpeaking(false);
+      } else {
+        const utterance = new SpeechSynthesisUtterance(message.text);
+        utterance.onend = () => setIsSpeaking(false);
+        window.speechSynthesis.speak(utterance);
+        setIsSpeaking(true);
+      }
+    }
+  };
+
+  const handleFeedback = (type) => {
+    setFeedback(type);
+    console.log(`Message feedback: ${type}`, message);
   };
 
   return (
@@ -50,12 +74,59 @@ const Message = ({ message, isBot = false }) => {
             </div>
           </div>
           
-          {/* Timestamp */}
+          {/* Timestamp and Actions */}
           <div className={classNames(
-            'text-xs text-gray-400 dark:text-gray-500 mt-1 px-1',
-            isBot ? 'text-left' : 'text-right'
+            'flex items-center gap-2 mt-1 px-1',
+            isBot ? 'justify-start' : 'justify-end'
           )}>
-            {formatTime(message.timestamp)}
+            <span className="text-xs text-gray-400 dark:text-gray-500">
+              {formatTime(message.timestamp)}
+            </span>
+            
+            {/* Bot Message Actions */}
+            {isBot && (
+              <div className="flex items-center gap-1">
+                {/* Speaker Button */}
+                {(config?.chat?.show_speaker_button !== false) && (
+                  <button
+                    onClick={handleSpeak}
+                    className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+                    title={isSpeaking ? 'Stop' : 'Listen'}
+                  >
+                    <i className={classNames(
+                      'text-sm',
+                      isSpeaking ? 'bx bx-stop text-red-500' : 'bx bx-volume-full text-gray-500 dark:text-gray-400'
+                    )}></i>
+                  </button>
+                )}
+                
+                {/* Like/Dislike Buttons */}
+                {(config?.chat?.show_like_dislike !== false) && (
+                  <>
+                    <button
+                      onClick={() => handleFeedback('like')}
+                      className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+                      title="Like"
+                    >
+                      <i className={classNames(
+                        'text-sm',
+                        feedback === 'like' ? 'bx bxs-like text-green-500' : 'bx bx-like text-gray-500 dark:text-gray-400'
+                      )}></i>
+                    </button>
+                    <button
+                      onClick={() => handleFeedback('dislike')}
+                      className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+                      title="Dislike"
+                    >
+                      <i className={classNames(
+                        'text-sm',
+                        feedback === 'dislike' ? 'bx bxs-dislike text-red-500' : 'bx bx-dislike text-gray-500 dark:text-gray-400'
+                      )}></i>
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
