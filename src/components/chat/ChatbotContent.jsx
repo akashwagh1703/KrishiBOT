@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MessageBubble from './MessageBubble';
 import SuggestionChips from './SuggestionChips';
-import WeatherCard from './cards/WeatherCard';
+import WeatherCard from '../chat/cards/WeatherCard';
 import SchemeCard from './cards/SchemeCard';
 import CropGrid from './cards/CropGrid';
 import DropdownCard from './cards/DropdownCard';
@@ -91,7 +91,7 @@ const ChatbotContent = () => {
         text: "Here's the current weather information for your location:",
         sender: 'bot',
         timestamp: new Date().toISOString(),
-        card: { type: 'weather', data: data.current }
+        card: { type: 'weather', data: { current: data.current, forecast: data.forecast } }
       };
       addMessage(botMessage);
     } catch (error) {
@@ -395,6 +395,8 @@ const ChatbotContent = () => {
     }
   };
 
+  
+
   return (
     <div className="flex flex-col h-full  from-green-50 to-emerald-50 dark:from-gray-900 dark:to-gray-800">
       {/* Messages Area */}
@@ -406,7 +408,7 @@ const ChatbotContent = () => {
             {message.card && (
               <div className="flex justify-start">
                 <div className="mt-2  animate-fade-in max-w-2xl">
-                  {message.card.type === 'weather' && <WeatherCard data={message.card.data} />}
+                  {message.card.type === 'weather' && <WeatherCard weather={message.card.data.current} forecastData={message.card.data.forecast} />}
                   {message.card.type === 'scheme' && <SchemeCard data={message.card.data} />}
                   {message.card.type === 'crop-grid' && (
                     <CropGrid crops={message.card.data} onSelect={handleCropSelection} />
