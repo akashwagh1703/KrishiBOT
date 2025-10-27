@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import config from '../../config/app.config.json';
-import { colors } from '../../utils/colors';
+import { useNavigate } from 'react-router-dom';
 
 const OTPScreen = ({ mobile, onSubmit, onResend }) => {
+  const navigate = useNavigate();
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [timer, setTimer] = useState(30);
   const inputRefs = useRef([]);
@@ -48,34 +48,37 @@ const OTPScreen = ({ mobile, onSubmit, onResend }) => {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${colors.bgPrimaryLight} via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4`}>
-      <div className="w-full max-w-md">
-        {/* Logo */}
-        {/* <div className="text-center mb-8 animate-fade-in">
-          {config.branding.show_logo && (
-            <div className="w-24 h-24 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl">
-              <img src={config.branding.logo_icon} className="w-16 h-16" alt="Logo" />
-            </div>
-          )}
-        </div> */}
+    <div className="min-h-screen bg-dark-950 relative overflow-hidden flex items-center justify-center p-4">
+      {/* Animated Background */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-neon-green/10 rounded-full blur-[120px] animate-float"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-neon-cyan/10 rounded-full blur-[120px] animate-float" style={{ animationDelay: '3s' }}></div>
+      </div>
+
+      <div className="w-full max-w-md relative z-10">
+        {/* Back Button */}
+        <button onClick={() => navigate('/login')} className="mb-6 flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+          <i className="bx bx-arrow-back text-xl"></i>
+          <span className="text-sm">Back to login</span>
+        </button>
 
         {/* OTP Card */}
-        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 animate-slide-up">
+        <div className="glass-panel border border-white/10 rounded-2xl p-8 backdrop-blur-xl animate-slide-in">
           <div className="text-center mb-8">
-            <div className={`w-16 h-16 ${colors.bgPrimaryLight} bg-opacity-50 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4`}>
-               <img src={config.branding.logo_icon} className="w-16 h-16" alt="Logo" />
+            <div className="w-16 h-16 bg-gradient-to-br from-neon-green to-neon-cyan rounded-xl flex items-center justify-center mx-auto mb-4 animate-morph">
+              <i className="bx bx-message-dots text-3xl text-dark-950 font-bold"></i>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Verify OTP</h2>
-            <p className="text-gray-600 dark:text-gray-400">
+            <h2 className="text-2xl font-bold text-white mb-2">Verify OTP</h2>
+            <p className="text-gray-400 text-sm">
               Enter the 6-digit code sent to
             </p>
-            <p className={`${colors.textPrimaryDark} dark:text-green-400 font-semibold mt-1`}>
+            <p className="text-neon-green font-semibold mt-1">
               +91 {mobile}
             </p>
           </div>
 
           {/* OTP Input */}
-          <div className="flex justify-center gap-3 mb-8">
+          <div className="flex justify-center gap-2 sm:gap-3 mb-8">
             {otp.map((digit, index) => (
               <input
                 key={index}
@@ -85,7 +88,8 @@ const OTPScreen = ({ mobile, onSubmit, onResend }) => {
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
-                className={`w-14 h-14 text-center text-2xl font-bold bg-gray-50 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-2xl focus:outline-none focus:ring-2 ${colors.ringPrimary} focus:border-transparent text-gray-900 dark:text-white transition-all`}
+                className="w-12 h-12 sm:w-14 sm:h-14 text-center text-xl sm:text-2xl font-bold bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-neon-green/50 text-white transition-all"
+                style={{ boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.1)' }}
               />
             ))}
           </div>
@@ -93,13 +97,13 @@ const OTPScreen = ({ mobile, onSubmit, onResend }) => {
           {/* Timer and Resend */}
           <div className="text-center mb-6">
             {timer > 0 ? (
-              <p className="text-gray-600 dark:text-gray-400">
-                Resend OTP in <span className={`font-semibold ${colors.textPrimaryDark} dark:text-green-400`}>{timer}s</span>
+              <p className="text-gray-400 text-sm">
+                Resend OTP in <span className="font-semibold text-neon-green">{timer}s</span>
               </p>
             ) : (
               <button
                 onClick={handleResend}
-                className={`${colors.textPrimaryDark} dark:text-green-400 font-semibold hover:underline`}
+                className="text-neon-green font-semibold hover:underline text-sm"
               >
                 Resend OTP
               </button>
@@ -109,16 +113,16 @@ const OTPScreen = ({ mobile, onSubmit, onResend }) => {
           <button
             onClick={() => onSubmit(otp.join(''))}
             disabled={otp.some(digit => digit === '')}
-            className={`w-full py-4 ${colors.gradientPrimary} text-white font-semibold rounded-2xl ${colors.hoverGradient} focus:outline-none focus:ring-4 ${colors.ringPrimary} disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105 shadow-lg`}
+            className="w-full py-3.5 bg-gradient-to-r from-neon-green to-neon-cyan text-dark-950 font-semibold rounded-xl hover:shadow-lg hover:shadow-neon-green/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
             Verify & Continue
           </button>
         </div>
 
         {/* Security Note */}
-        <div className="mt-6 text-center animate-fade-in">
-          <div className="inline-flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-            <i className="bx bx-lock-alt text-lg"></i>
+        <div className="mt-6 text-center">
+          <div className="inline-flex items-center gap-2 text-xs text-gray-500">
+            <i className="bx bx-lock-alt text-base"></i>
             <span>Your information is secure with us</span>
           </div>
         </div>

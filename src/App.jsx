@@ -6,9 +6,16 @@ import AuthFlow from './components/auth/AuthFlow';
 import OTPFlow from './components/auth/OTPFlow';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import FloatingChatbot from './components/chat/FloatingChatbot';
+import ParticleBackground from './components/ui/ParticleBackground';
+import HolographicOverlay from './components/ui/HolographicOverlay';
+import DataStream from './components/ui/DataStream';
+// import CornerAccents from './components/ui/CornerAccents';
+import QuantumField from './components/ui/QuantumField';
+import NeuralPulse from './components/ui/NeuralPulse';
 
 import { Suspense } from 'react';
 import Profile from './routes/Profile';
+import HomePage from './routes/HomePage';
 
 function App() {
   const { isDark } = useThemeStore();
@@ -35,10 +42,16 @@ function App() {
 
   return (
     <Router>
+      <QuantumField />
+      <NeuralPulse />
+      <ParticleBackground />
+      <HolographicOverlay />
+      <DataStream />
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="h-screen overflow-hidden">
+      <div className="h-screen overflow-hidden relative z-10">
         <Suspense fallback={null}>
           <Routes>
+            <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<AuthFlow />} />
             <Route path="/verifyotp" element={<OTPFlow />} />
             <Route path="/chat" element={
@@ -74,7 +87,7 @@ function App() {
               </ProtectedRoute>
             } />
             <Route path="*" element={
-              <Navigate to={localStorage.getItem('is_authenticated') === 'true' ? '/chat' : '/login'} replace />
+              <Navigate to="/" replace />
             } />
           </Routes>
         </Suspense>

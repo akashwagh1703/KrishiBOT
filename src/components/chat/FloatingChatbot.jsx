@@ -5,8 +5,6 @@ import ChatbotContent from './ChatbotContent';
 import { authAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 import config from "../../config/app.config.json";
-import { colors } from '../../utils/colors';
-
 
 const FloatingChatbot = () => {
   const navigate = useNavigate();
@@ -40,66 +38,74 @@ const FloatingChatbot = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col">
-      <div className={`${colors.gradientPrimary} p-4 flex items-center justify-between shadow-lg`}>
-        <div className="flex items-center space-x-3">
+    <div className="h-screen flex bg-dark-950">
+      {/* Futuristic Sidebar */}
+      <div className="w-20 glass-panel border-r border-neon-green/10 backdrop-blur-2xl relative overflow-hidden flex flex-col">
+        <div className="absolute inset-0 bg-gradient-to-b from-neon-green/5 via-transparent to-neon-blue/5" />
+        <div className="absolute right-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-neon-green/50 to-transparent"></div>
+        
+        {/* Logo */}
+        <div className="relative p-4 flex flex-col items-center border-b border-white/5">
           {config.branding.show_logo && (
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-              <img src={config.branding.logo_icon} className='p-2' alt="" />
-            </div>
-          )}
-          {config.branding.show_name && (
-            <div>
-              <h3 className="text-white font-bold text-2xl">{config.branding.app_name}</h3>
-              <p className="text-green-100 text-sm">Your AI-Powered Farming Assistant</p>
+            <div className="w-12 h-12 bg-gradient-to-br from-neon-green to-neon-cyan p-0.5 animate-glow-pulse animate-morph">
+              <div className="w-full h-full bg-dark-900 flex items-center justify-center" style={{ borderRadius: 'inherit' }}>
+                <img src={config.branding.logo_icon} className='w-8 h-8' alt="" />
+              </div>
             </div>
           )}
         </div>
-        <div className="flex items-center space-x-3">
-          {config.branding.show_client_logos && config.branding.client_logos && (
-            <div className="flex items-center space-x-3 mr-2 pr-3 border-r border-white/30">
-              {config.branding.client_logos.map((logo, index) => (
-                <img
-                  key={index}
-                  src={logo}
 
-                  alt={`Client ${index + 1}`}
-                  className="h-12 w-auto object-contain p-1 bg-white hover:opacity-100 transition-opacity"
-                />
-              ))}
-            </div>
-          )}
-          {config.ui.language_switcher_enabled && (
-            <div className="[&>div>button]:bg-white/20 [&>div>button]:hover:bg-white/30 [&>div>button]:w-10 [&>div>button]:h-10 [&>div>div]:bg-white">
-              <LanguageSwitcher />
-            </div>
-          )}
+        {/* Navigation Icons */}
+        <div className="flex-1 flex flex-col items-center gap-4 py-6 relative z-10">
+          <NavLink to="/chat" className="w-12 h-12 bg-white/5 hover:bg-neon-green/20 border border-white/10 rounded-xl flex items-center justify-center transition-all group relative">
+            <i className="bx bx-message-dots text-gray-300 group-hover:text-neon-green text-xl transition-colors"></i>
+            <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-1 h-0 bg-neon-green group-hover:h-8 transition-all duration-300 rounded-full"></div>
+          </NavLink>
+          
+          <NavLink to="/weather" className="w-12 h-12 bg-white/5 hover:bg-neon-cyan/20 border border-white/10 rounded-xl flex items-center justify-center transition-all group relative">
+            <i className="bx bx-sun text-gray-300 group-hover:text-neon-cyan text-xl transition-colors"></i>
+            <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-1 h-0 bg-neon-cyan group-hover:h-8 transition-all duration-300 rounded-full"></div>
+          </NavLink>
+          
+          <NavLink to="/schemes" className="w-12 h-12 bg-white/5 hover:bg-neon-blue/20 border border-white/10 rounded-xl flex items-center justify-center transition-all group relative">
+            <i className="bx bx-file text-gray-300 group-hover:text-neon-blue text-xl transition-colors"></i>
+            <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-1 h-0 bg-neon-blue group-hover:h-8 transition-all duration-300 rounded-full"></div>
+          </NavLink>
+          
+          <NavLink to="/plant-protection" className="w-12 h-12 bg-white/5 hover:bg-neon-green/20 border border-white/10 rounded-xl flex items-center justify-center transition-all group relative">
+            <i className="bx bx-shield text-gray-300 group-hover:text-neon-green text-xl transition-colors"></i>
+            <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-1 h-0 bg-neon-green group-hover:h-8 transition-all duration-300 rounded-full"></div>
+          </NavLink>
+        </div>
+
+        {/* Bottom Actions */}
+        <div className="relative flex flex-col items-center gap-3 p-4 border-t border-white/5">
           {config.ui.theme_toggle_enabled && (
             <button
               onClick={toggleTheme}
-              className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors"
+              className="w-12 h-12 bg-white/5 hover:bg-neon-green/20 border border-white/10 rounded-xl flex items-center justify-center transition-all group"
               aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
-              <i className={`bx ${isDark ? 'bx-sun' : 'bx-moon'} text-white text-xl`}></i>
+              <i className={`bx ${isDark ? 'bx-sun' : 'bx-moon'} text-gray-300 group-hover:text-neon-green text-xl transition-colors`}></i>
             </button>
           )}
           {config.ui.profile_enabled && (
-            <NavLink to="/profile" className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors">
-              <i className="bx bx-user text-white text-xl"></i>
+            <NavLink to="/profile" className="w-12 h-12 bg-white/5 hover:bg-neon-cyan/20 border border-white/10 rounded-xl flex items-center justify-center transition-all group">
+              <i className="bx bx-user text-gray-300 group-hover:text-neon-cyan text-xl transition-colors"></i>
             </NavLink>
           )}
           <button
             onClick={handleLogout}
-            className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center transition-colors"
+            className="w-12 h-12 bg-white/5 hover:bg-red-500/20 border border-white/10 rounded-xl flex items-center justify-center transition-all group"
             aria-label="Logout"
           >
-            <i className="bx bx-log-out text-white text-xl"></i>
+            <i className="bx bx-log-out text-gray-300 group-hover:text-red-400 text-xl transition-colors"></i>
           </button>
         </div>
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-hidden chatbot">
+      <div className="flex-1 overflow-hidden flex flex-col">
         <ChatbotContent />
       </div>
     </div>

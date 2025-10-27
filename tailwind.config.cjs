@@ -8,64 +8,80 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          400: '#4ade80',
-          500: '#22c55e',
-          600: '#16a34a',
-          700: '#15803d',
-          800: '#166534',
-          900: '#14532d'
+        neon: {
+          green: '#00ff88',
+          lime: '#ccff00',
+          cyan: '#00ffff',
+          blue: '#0088ff'
         },
-        accent: {
-          50: '#fef3c7',
-          500: '#f59e0b',
-          600: '#d97706'
-        },
-        surface: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a'
+        dark: {
+          950: '#030712',
+          900: '#0a0f1e',
+          800: '#111827',
+          700: '#1f2937'
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+        sans: ['Inter', 'Poppins', 'system-ui', 'sans-serif']
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.3s ease-out',
-        'bounce-gentle': 'bounceGentle 2s infinite',
-        'slide-infinite': 'slideInfinite 20s linear infinite'
+        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+        'slide-in': 'slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+        'fade-in': 'fadeIn 0.5s ease-out',
+        'float': 'float 8s ease-in-out infinite',
+        'shimmer': 'shimmer 2s linear infinite',
+        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+        'border-glow': 'borderGlow 2s ease-in-out infinite',
+        'morph': 'morph 4s ease-in-out infinite'
       },
       keyframes: {
+        glowPulse: {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(0, 255, 136, 0.3)' },
+          '50%': { boxShadow: '0 0 40px rgba(0, 255, 136, 0.6)' }
+        },
+        borderGlow: {
+          '0%, 100%': { borderColor: 'rgba(255, 255, 255, 0.1)', boxShadow: '0 0 0 0 rgba(0, 255, 136, 0)' },
+          '50%': { borderColor: 'rgba(0, 255, 136, 0.5)', boxShadow: '0 0 20px 0 rgba(0, 255, 136, 0.3)' }
+        },
+        slideIn: {
+          '0%': { opacity: '0', transform: 'translateY(20px) scale(0.95)' },
+          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' }
+        },
         fadeIn: {
-          '0%': { opacity: '0', transform: 'translateY(10px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' }
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' }
         },
-        slideUp: {
-          '0%': { transform: 'translateY(100%)' },
-          '100%': { transform: 'translateY(0)' }
+        float: {
+          '0%, 100%': { transform: 'translateY(0px) translateX(0px)' },
+          '33%': { transform: 'translateY(-30px) translateX(20px)' },
+          '66%': { transform: 'translateY(-15px) translateX(-20px)' }
         },
-        bounceGentle: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-5px)' }
+        shimmer: {
+          '0%': { backgroundPosition: '-1000px 0' },
+          '100%': { backgroundPosition: '1000px 0' }
         },
-        slideInfinite: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' }
+        pulseGlow: {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(0, 255, 136, 0.4)' },
+          '50%': { boxShadow: '0 0 0 8px rgba(0, 255, 136, 0)' }
+        },
+        morph: {
+          '0%, 100%': { borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%' },
+          '25%': { borderRadius: '58% 42% 75% 25% / 76% 46% 54% 24%' },
+          '50%': { borderRadius: '50% 50% 33% 67% / 55% 27% 73% 45%' },
+          '75%': { borderRadius: '33% 67% 58% 42% / 63% 68% 32% 37%' }
         }
       },
-      boxShadow: {
-        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
-        'glow': '0 0 20px rgba(34, 197, 94, 0.3)'
+      backdropBlur: {
+        xs: '2px'
+      },
+      transitionTimingFunction: {
+        'smooth': 'cubic-bezier(0.16, 1, 0.3, 1)'
+      },
+      backgroundImage: {
+        'radial-grid': 'radial-gradient(circle, rgba(0, 255, 136, 0.1) 1px, transparent 1px)'
+      },
+      backgroundSize: {
+        'grid': '20px 20px'
       }
     },
   },

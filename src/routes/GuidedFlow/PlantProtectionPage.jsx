@@ -222,16 +222,16 @@ const PlantProtectionPage = () => {
   }
 
   return (
-    <div className="h-full flex flex-col bg-gradient-to-b from-emerald-50 to-green-100 dark:from-emerald-900/20 dark:to-green-900/20">
+    <div className="h-full flex flex-col bg-dark-950">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
+      <div className="flex items-center justify-between p-4 border-b border-white/10 glass-panel backdrop-blur-xl">
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-emerald-500 rounded-xl">
-            <i className="bx bx-shield text-white text-xl"></i>
+          <div className="p-2 bg-gradient-to-br from-neon-green to-neon-cyan rounded-xl animate-morph">
+            <i className="bx bx-shield text-dark-950 text-xl"></i>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white">Plant Protection</h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Crop disease diagnosis & treatment</p>
+            <h3 className="font-semibold text-white">Plant Protection</h3>
+            <p className="text-sm text-gray-400">Crop disease diagnosis & treatment</p>
           </div>
         </div>
       </div>
@@ -242,8 +242,8 @@ const PlantProtectionPage = () => {
           <div key={message.id} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
               message.sender === 'user' 
-                ? 'bg-emerald-500 text-white' 
-                : 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600'
+                ? 'bg-gradient-to-r from-neon-green to-neon-cyan text-dark-950 font-semibold' 
+                : 'glass-panel border border-white/10 text-white backdrop-blur-xl'
             }`}>
               {message.image && (
                 <img src={message.image} alt="Uploaded crop" className="w-full h-32 object-cover rounded-lg mb-2" />
@@ -260,11 +260,11 @@ const PlantProtectionPage = () => {
         {/* Typing Indicator */}
         {isTyping && (
           <div className="flex justify-start">
-            <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl px-4 py-2">
+            <div className="glass-panel border border-white/10 rounded-2xl px-4 py-2 backdrop-blur-xl">
               <div className="flex space-x-1">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                <div className="w-2 h-2 bg-neon-green rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-neon-green rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                <div className="w-2 h-2 bg-neon-green rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
               </div>
             </div>
           </div>
@@ -274,12 +274,12 @@ const PlantProtectionPage = () => {
       </div>
 
       {/* Input Controls */}
-      <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm space-y-4">
+      <div className="border-t border-white/10 p-4 glass-panel backdrop-blur-xl space-y-4">
         {/* Action Buttons */}
         <div className="flex gap-2">
           <button
             onClick={handlePlantixFlow}
-            className="flex-1 px-4 py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-xl font-medium transition-colors"
+            className="flex-1 px-4 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/30 transition-all"
           >
             <i className="bx bx-camera mr-2"></i>Plantix Flow
           </button>
@@ -291,7 +291,7 @@ const PlantProtectionPage = () => {
               setShowPlantixFlow(false);
               initializeChat();
             }}
-            className="px-4 py-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-700 dark:text-gray-200 rounded-xl transition-colors"
+            className="px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl transition-all"
           >
             <i className="bx bx-refresh"></i>
           </button>
@@ -300,7 +300,7 @@ const PlantProtectionPage = () => {
         {/* Plantix Image Upload */}
         {showPlantixFlow && (
           <div className="space-y-3">
-            <div className="border-2 border-dashed border-purple-300 dark:border-purple-600 rounded-xl p-4 text-center">
+            <div className="border-2 border-dashed border-purple-500/30 rounded-xl p-4 text-center bg-purple-500/5">
               <input
                 type="file"
                 accept="image/*,image/jpeg,image/png,image/jpg"
@@ -310,12 +310,12 @@ const PlantProtectionPage = () => {
               />
               <label htmlFor="plantix-image" className="cursor-pointer">
                 <div className="flex flex-col items-center gap-2">
-                  <div className="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-xl">
-                    <i className="bx bx-cloud-upload text-purple-500 text-2xl"></i>
+                  <div className="p-3 bg-purple-500/20 rounded-xl">
+                    <i className="bx bx-cloud-upload text-purple-400 text-2xl"></i>
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">Upload or Capture Photo</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">JPG, PNG, JPEG up to 10MB</p>
+                    <p className="text-sm font-semibold text-white">Upload or Capture Photo</p>
+                    <p className="text-xs text-gray-400">JPG, PNG, JPEG up to 10MB</p>
                   </div>
                 </div>
               </label>
@@ -323,13 +323,13 @@ const PlantProtectionPage = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => document.getElementById('plantix-image').click()}
-                className="flex-1 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm transition-colors"
+                className="flex-1 px-3 py-2 bg-gradient-to-r from-neon-blue to-neon-cyan text-white rounded-lg text-sm font-semibold hover:shadow-lg hover:shadow-neon-blue/30 transition-all"
               >
                 <i className="bx bx-image mr-1"></i>Choose from Gallery
               </button>
               <button
                 onClick={() => document.getElementById('plantix-image').click()}
-                className="flex-1 px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm transition-colors"
+                className="flex-1 px-3 py-2 bg-gradient-to-r from-neon-green to-neon-cyan text-dark-950 rounded-lg text-sm font-semibold hover:shadow-lg hover:shadow-neon-green/30 transition-all"
               >
                 <i className="bx bx-camera mr-1"></i>Open Camera
               </button>
@@ -341,13 +341,13 @@ const PlantProtectionPage = () => {
         {!showPlantixFlow && plantProtectionData && (
           <div className="space-y-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                <i className="bx bx-leaf mr-2"></i>Select Crop:
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                <i className="bx bx-leaf mr-2 text-neon-green"></i>Select Crop:
               </label>
               <select
                 value={selectedCrop}
                 onChange={(e) => handleCropSelection(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                className="w-full px-4 py-3 border border-white/10 rounded-xl bg-white/5 text-white focus:outline-none focus:border-neon-green/50 transition-all"
               >
                 <option value="">Choose a crop...</option>
                 {plantProtectionData.crops.map((crop) => (
@@ -358,13 +358,13 @@ const PlantProtectionPage = () => {
             
             {selectedCrop && availableDiseases.length > 0 && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  <i className="bx bx-bug mr-2"></i>Select Disease:
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <i className="bx bx-bug mr-2 text-neon-cyan"></i>Select Disease:
                 </label>
                 <select
                   value={selectedDisease}
                   onChange={(e) => handleDiseaseSelection(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-white/10 rounded-xl bg-white/5 text-white focus:outline-none focus:border-neon-green/50 transition-all"
                 >
                   <option value="">Choose a disease...</option>
                   {availableDiseases.map((disease) => (

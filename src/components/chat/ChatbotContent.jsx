@@ -398,9 +398,9 @@ const ChatbotContent = () => {
   
 
   return (
-    <div className="flex flex-col h-full  from-green-50 to-emerald-50 dark:from-gray-900 dark:to-gray-800">
+    <div className="flex flex-col h-full bg-dark-950">
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4 max-w-4xl mx-auto w-full">
+      <div className="flex-1 overflow-y-auto p-6 space-y-6 max-w-5xl mx-auto w-full">
         {messages.map((message) => (
           <div key={message.id}>
             <MessageBubble message={message} />
@@ -461,12 +461,12 @@ const ChatbotContent = () => {
         ))}
 
         {isTyping && (
-          <div className="flex justify-start animate-fade-in">
-            <div className="bg-white dark:bg-gray-700 rounded-2xl px-4 py-3 shadow-soft">
-              <div className="flex space-x-1">
-                <div className={`w-2 h-2 ${colors.bgPrimary} rounded-full animate-bounce`}></div>
-                <div className={`w-2 h-2 ${colors.bgPrimary} rounded-full animate-bounce`} style={{animationDelay: '0.1s'}}></div>
-                <div className={`w-2 h-2 ${colors.bgPrimary} rounded-full animate-bounce`} style={{animationDelay: '0.2s'}}></div>
+          <div className="flex justify-start animate-slide-in">
+            <div className="glass-panel px-5 py-3 border border-neon-green/20">
+              <div className="flex space-x-2">
+                <div className="w-2 h-2 bg-neon-green rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-neon-cyan rounded-full animate-bounce" style={{animationDelay: '0.15s'}}></div>
+                <div className="w-2 h-2 bg-neon-blue rounded-full animate-bounce" style={{animationDelay: '0.3s'}}></div>
               </div>
             </div>
           </div>
@@ -475,33 +475,35 @@ const ChatbotContent = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Area */}
+      {/* Futuristic Input Area */}
       {config.chat.show_input_section && (
-        <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800">
-          <div className="flex items-center space-x-2 max-w-4xl mx-auto w-full">
+        <div className="border-t border-white/5 p-4 glass-panel backdrop-blur-2xl">
+          <div className="flex items-center gap-3 max-w-5xl mx-auto w-full">
             {config.chat.show_emoji_button && (
-              <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-                <i className="bx bx-happy text-gray-500 text-xl"></i>
+              <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 hover:bg-neon-green/20 border border-white/10 transition-all group">
+                <i className="bx bx-happy text-gray-400 group-hover:text-neon-green text-xl transition-colors"></i>
               </button>
             )}
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              placeholder="Type a message..."
-              className="flex-1 px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-900 dark:text-white"
-            />
+            <div className="flex-1 relative">
+              <input
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                placeholder="Ask me anything about farming..."
+                className="input-glow w-full"
+              />
+            </div>
             {config.chat.show_voice_button && config.features.voice_input && (
-              <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-                <i className="bx bx-microphone text-gray-500 text-xl"></i>
+              <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 hover:bg-neon-green/20 border border-white/10 transition-all group">
+                <i className="bx bx-microphone text-gray-400 group-hover:text-neon-green text-xl transition-colors"></i>
               </button>
             )}
             {config.chat.show_send_button && (
               <button
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim()}
-                className="p-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full hover:scale-110 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-neon disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 <i className="bx bx-send text-xl"></i>
               </button>

@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { getCropImage, getCropEmoji } from '../../../assets/img/crops';
-import { colors } from '../../../utils/colors';
 
 const CropGrid = ({ crops, onSelect }) => {
   const [imageErrors, setImageErrors] = useState({});
   const [hoveredCrop, setHoveredCrop] = useState(null);
 
   return (
-    <div className={`${colors.gradientBr} from-white dark:from-gray-700 dark:to-gray-800 rounded-3xl p-6 shadow-2xl border-2 ${colors.borderPrimary} dark:border-green-600 animate-slide-up`}>
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
+    <div className="glass-panel border border-neon-green/20 rounded-2xl p-6 animate-slide-in animate-border-glow">
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
         {crops.map((crop, index) => {
           const cropName = typeof crop === 'string' ? crop : crop.name;
           const cropImage = typeof crop === 'object' ? crop.image_url : null;
@@ -23,34 +22,34 @@ const CropGrid = ({ crops, onSelect }) => {
               onClick={() => onSelect(cropName)}
               onMouseEnter={() => setHoveredCrop(cropName)}
               onMouseLeave={() => setHoveredCrop(null)}
-              className={`group relative flex flex-col items-center p-4 bg-white dark:bg-gray-600 rounded-2xl hover:bg-gradient-to-br ${colors.hoverGradientLight} dark:hover:from-green-900/30 dark:hover:to-emerald-900/30 transition-all duration-300 border-2 border-gray-200 dark:border-gray-500 ${colors.borderPrimaryMid} dark:hover:border-green-500 hover:shadow-xl hover:scale-110 transform`}
-              style={{ animationDelay: `${index * 50}ms` }}
+              className="group relative flex flex-col items-center p-4 glass-panel border border-white/10 hover:border-neon-green/50 rounded-xl transition-all duration-300 hover:scale-105"
+              style={{ animationDelay: `${index * 30}ms` }}
             >
-              <div className={`absolute inset-0 bg-gradient-to-br from-green-400/0 to-emerald-400/0 group-hover:from-green-400/10 group-hover:to-emerald-400/10 rounded-2xl transition-all duration-300`}></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-neon-green/0 to-neon-cyan/0 group-hover:from-neon-green/10 group-hover:to-neon-cyan/10 rounded-xl transition-all duration-300"></div>
               
-              <div className="relative w-16 h-16 mb-3 flex items-center justify-center">
+              <div className="relative w-16 h-16 mb-2 flex items-center justify-center">
                 {imageUrl && !hasImageError ? (
                   <img
                     src={imageUrl}
                     alt={cropName}
-                    className="w-full h-full object-cover rounded-xl shadow-md group-hover:shadow-lg transition-shadow"
+                    className="w-full h-full object-cover rounded-lg"
                     onError={() => setImageErrors(prev => ({ ...prev, [cropName]: true }))}
                   />
                 ) : (
-                  <div className="text-5xl group-hover:scale-125 transition-transform duration-300">{emoji}</div>
+                  <div className="text-4xl group-hover:scale-110 transition-transform duration-300">{emoji}</div>
                 )}
                 {isHovered && (
-                  <div className={`absolute -top-1 -right-1 w-6 h-6 ${colors.checkBg} rounded-full flex items-center justify-center animate-bounce`}>
-                    <i className="bx bx-check text-white text-sm"></i>
+                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-neon-green rounded-full flex items-center justify-center animate-bounce">
+                    <i className="bx bx-check text-dark-950 text-xs font-bold"></i>
                   </div>
                 )}
               </div>
               
-              <span className={`relative text-sm font-semibold text-gray-800 dark:text-gray-200 text-center ${colors.textPrimaryDark} dark:group-hover:text-green-400 transition-colors`}>
+              <span className="relative text-xs font-semibold text-gray-300 group-hover:text-neon-green text-center transition-colors">
                 {cropName}
               </span>
               
-              <div className={`absolute bottom-0 left-0 right-0 h-1 ${colors.gradientPrimary} rounded-b-2xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300`}></div>
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-neon-green to-neon-cyan rounded-b-xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
             </button>
           );
         })}

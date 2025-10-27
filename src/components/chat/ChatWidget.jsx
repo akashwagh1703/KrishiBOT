@@ -79,57 +79,38 @@ const ChatWidget = () => {
   const lastBotMessage = messages.filter(m => m.sender === 'bot').pop();
 
   return (
-    <div className="flex flex-col h-full bg-gradient-to-b from-indigo-50 to-purple-100 dark:from-indigo-900 dark:to-purple-900">
+    <div className="flex flex-col h-full bg-dark-950/50">
       {/* Chat Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
+      <div className="glass-panel flex items-center justify-between p-4 border-b border-white/5">
         <div className="flex items-center space-x-3">
           {/* <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-soft">
             <img src={config.branding.logo_icon} alt="Logo" className="w-10 h-10" />
           </div> */}
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white">
+            <h3 className="font-bold text-white glow-text">
               {config.branding.app_name}
             </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              {isTyping ? 'Typing...' : 'Online'}
+            <p className="text-sm text-neon-green">
+              {isTyping ? 'Typing...' : '● Online'}
             </p>
           </div>
-        </div>
-        <div className="flex items-center space-x-2">
-          <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-            <i className="bx bx-phone text-gray-500 dark:text-gray-400"></i>
-          </button>
-          <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-            <i className="bx bx-dots-vertical-rounded text-gray-500 dark:text-gray-400"></i>
-          </button>
         </div>
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.map(message => (
           <Message key={message.id} message={message} isBot={message.sender === 'bot'} />
         ))}
 
         {/* Typing Indicator */}
         {isTyping && (
-          <div className="flex justify-start animate-fade-in">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-soft">
-                <img src={config.branding.logo_icon} alt="Logo" className="w-8 h-8" />
-              </div>
-              <div className="chat-bubble bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600">
-                <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-primary-500 rounded-full animate-bounce"></div>
-                  <div
-                    className="w-2 h-2 bg-primary-500 rounded-full animate-bounce"
-                    style={{ animationDelay: '0.1s' }}
-                  ></div>
-                  <div
-                    className="w-2 h-2 bg-primary-500 rounded-full animate-bounce"
-                    style={{ animationDelay: '0.2s' }}
-                  ></div>
-                </div>
+          <div className="flex justify-start animate-slide-in">
+            <div className="glass-panel px-4 py-3 rounded-2xl">
+              <div className="flex space-x-1">
+                <div className="w-2 h-2 bg-neon-green rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-neon-green rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                <div className="w-2 h-2 bg-neon-green rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
               </div>
             </div>
           </div>
@@ -146,7 +127,7 @@ const ChatWidget = () => {
       </div>
 
       {/* Input Area */}
-      <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
+      <div className="glass-panel border-t border-white/5 p-4">
         <div className="flex items-end space-x-3">
           <div className="flex-1 relative">
             <textarea
@@ -155,7 +136,7 @@ const ChatWidget = () => {
               onChange={e => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder={t('typeMessage')}
-              className="input-field resize-none min-h-[44px] max-h-32 pr-12"
+              className="input-glow resize-none min-h-[44px] max-h-32 pr-12"
               rows="1"
               style={{
                 height: 'auto',
@@ -166,44 +147,19 @@ const ChatWidget = () => {
                 e.target.style.height = Math.min(e.target.scrollHeight, 128) + 'px';
               }}
             />
-            {config.features.voice_input && (
-              <button
-                onClick={() => alert('Voice input coming soon!')}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-              >
-                <i className="bx bx-microphone text-gray-500 dark:text-gray-400"></i>
-              </button>
-            )}
           </div>
-
-          {config.features.file_upload && (
-            <button
-              onClick={() => alert('Attach files coming soon!')}
-              className="p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors"
-            >
-              <i className="bx bx-paperclip text-gray-500 dark:text-gray-400"></i>
-            </button>
-          )}
 
           <button
             onClick={() => handleSendMessage()}
             disabled={!inputValue.trim() || isTyping}
-            className="p-3 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 disabled:from-gray-300 disabled:to-gray-400 text-white rounded-xl transition-all duration-200 shadow-soft hover:shadow-glow disabled:cursor-not-allowed transform hover:scale-105 disabled:transform-none"
+            className="btn-neon p-3 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <i className="bx bx-send"></i>
           </button>
         </div>
 
-        {/* Suggested Actions */}
-        <div className="flex items-center justify-center mt-3 space-x-4 text-xs text-gray-500 dark:text-gray-400">
-          <span className="flex items-center">
-            <i className="bx bx-info-circle mr-1"></i>
-            Press Enter to send
-          </span>
-          <span className="flex items-center">
-            <i className="bx bx-microphone mr-1"></i>
-            Voice input available
-          </span>
+        <div className="flex items-center justify-center mt-3 text-xs text-gray-500">
+          <span>Press Enter to send</span>
         </div>
       </div>
     </div>

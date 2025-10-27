@@ -153,16 +153,16 @@ const SelectCropPage = () => {
   }
 
   return (
-    <div className="h-full flex flex-col bg-gradient-to-b from-green-50 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20">
+    <div className="h-full flex flex-col bg-dark-950">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
+      <div className="flex items-center justify-between p-4 border-b border-white/10 glass-panel backdrop-blur-xl">
         <div className="flex items-center space-x-3">
-          <div className="p-2 bg-green-500 rounded-xl">
-            <i className="bx bx-leaf text-white text-xl"></i>
+          <div className="p-2 bg-gradient-to-br from-neon-green to-neon-cyan rounded-xl animate-morph">
+            <i className="bx bx-leaf text-dark-950 text-xl"></i>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white">Select Crop</h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Choose your crop for disease guidance</p>
+            <h3 className="font-semibold text-white">Select Crop</h3>
+            <p className="text-sm text-gray-400">Choose your crop for disease guidance</p>
           </div>
         </div>
       </div>
@@ -173,8 +173,8 @@ const SelectCropPage = () => {
           <div key={message.id} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
               message.sender === 'user' 
-                ? 'bg-green-500 text-white' 
-                : 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600'
+                ? 'bg-gradient-to-r from-neon-green to-neon-cyan text-dark-950 font-semibold' 
+                : 'glass-panel border border-white/10 text-white backdrop-blur-xl'
             }`}>
               <div className="whitespace-pre-wrap text-sm">
                 {message.text.split('**').map((part, index) => 
@@ -188,11 +188,11 @@ const SelectCropPage = () => {
         {/* Typing Indicator */}
         {isTyping && (
           <div className="flex justify-start">
-            <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl px-4 py-2">
+            <div className="glass-panel border border-white/10 rounded-2xl px-4 py-2 backdrop-blur-xl">
               <div className="flex space-x-1">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                <div className="w-2 h-2 bg-neon-green rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-neon-green rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                <div className="w-2 h-2 bg-neon-green rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
               </div>
             </div>
           </div>
@@ -202,11 +202,11 @@ const SelectCropPage = () => {
       </div>
 
       {/* Crop Selection Grid */}
-      <div className="border-t border-gray-200 dark:border-gray-700 p-4 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm space-y-4">
+      <div className="border-t border-white/10 p-4 glass-panel backdrop-blur-xl space-y-4">
         {!selectedCrop && plantProtectionData && (
           <div>
-            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-              <i className="bx bx-grid-alt mr-2"></i>Select Your Crop:
+            <h4 className="text-sm font-medium text-gray-300 mb-3">
+              <i className="bx bx-grid-alt mr-2 text-neon-green"></i>Select Your Crop:
             </h4>
             <div className="grid grid-cols-3 md:grid-cols-5 gap-3">
               {plantProtectionData.crops.map((crop) => {
@@ -218,7 +218,7 @@ const SelectCropPage = () => {
                   <button
                     key={crop}
                     onClick={() => handleCropSelection(crop)}
-                    className="flex flex-col items-center p-3 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl hover:bg-green-50 dark:hover:bg-green-900/20 hover:border-green-300 dark:hover:border-green-600 transition-all duration-300 hover:scale-105 shadow-sm"
+                    className="flex flex-col items-center p-3 glass-panel border border-white/10 rounded-xl hover:bg-neon-green/10 hover:border-neon-green/50 transition-all duration-300 hover:scale-105 backdrop-blur-xl"
                   >
                     <div className="w-12 h-12 mb-2 flex items-center justify-center">
                       {imageUrl && !hasImageError ? (
@@ -232,7 +232,7 @@ const SelectCropPage = () => {
                         <div className="text-3xl">{emoji}</div>
                       )}
                     </div>
-                    <span className="text-xs font-medium text-gray-700 dark:text-gray-300 text-center">{crop}</span>
+                    <span className="text-xs font-medium text-white text-center">{crop}</span>
                   </button>
                 );
               })}
@@ -243,13 +243,13 @@ const SelectCropPage = () => {
         {/* Disease Selection */}
         {selectedCrop && availableDiseases.length > 0 && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              <i className="bx bx-bug mr-2"></i>Select Disease for {selectedCrop}:
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              <i className="bx bx-bug mr-2 text-neon-cyan"></i>Select Disease for {selectedCrop}:
             </label>
             <select
               value={selectedDisease}
               onChange={(e) => handleDiseaseSelection(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-white/10 rounded-xl bg-white/5 text-white focus:outline-none focus:border-neon-green/50 transition-all"
               defaultValue=""
             >
               <option value="" disabled>Choose a disease...</option>
@@ -271,14 +271,14 @@ const SelectCropPage = () => {
                 setAvailableDiseases([]);
                 initializeChat();
               }}
-              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-700 dark:text-gray-200 rounded-xl text-sm transition-colors"
+              className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl text-sm transition-all"
             >
               <i className="bx bx-refresh mr-1"></i>Select Different Crop
             </button>
             {selectedDisease && (
               <button
                 onClick={() => handleDiseaseSelection(selectedDisease)}
-                className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-xl text-sm transition-colors"
+                className="px-4 py-2 bg-gradient-to-r from-neon-green to-neon-cyan text-dark-950 rounded-xl text-sm font-semibold hover:shadow-lg hover:shadow-neon-green/30 transition-all"
               >
                 <i className="bx bx-info-circle mr-1"></i>More Details
               </button>

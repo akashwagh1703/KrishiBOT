@@ -1,131 +1,99 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import 'boxicons/css/boxicons.min.css';
+import GuidedFlowCard from '../../components/guided/GuidedFlowCard';
 
 const GuidedHome = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const guidedOptions = [
     {
       title: t('weather'),
-      description: 'Check current weather conditions and get 7-day forecasts for better farming decisions',
-      icon: 'bx-cloud',
-      href: '/weather',
-      color: 'bg-blue-500',
-      features: ['Current conditions', '7-day forecast', 'Weather alerts', 'Farming recommendations']
+      description: 'Real-time weather insights and 7-day forecasts',
+      icon: 'bx-sun',
+      href: '/weather'
     },
     {
       title: t('schemes'),
-      description: 'Explore government schemes and subsidies available for farmers in your area',
-      icon: 'bx-building',
-      href: '/schemes',
-      color: 'bg-green-500',
-      features: ['Income support schemes', 'Crop insurance', 'Soil health programs', 'Credit facilities']
+      description: 'Government schemes and subsidies for farmers',
+      icon: 'bx-file',
+      href: '/schemes'
     },
     {
       title: t('plantProtection'),
-      description: 'Get expert diagnosis and treatment recommendations for crop diseases and pests',
-      icon: 'bx-leaf',
-      href: '/plant-protection',
-      color: 'bg-yellow-500',
-      features: ['Disease diagnosis', 'Pest identification', 'Treatment recommendations', 'Prevention tips']
+      description: 'AI-powered crop disease diagnosis and treatment',
+      icon: 'bx-shield',
+      href: '/plant-protection'
     },
     {
       title: 'Select Crop',
-      description: 'Choose your crop from visual grid and get disease-specific guidance with chat support',
-      icon: 'bx-grid-alt',
-      href: '/select-crop',
-      color: 'bg-purple-500',
-      features: ['Visual crop selection', 'Disease-specific guidance', 'Chat-based assistance', 'Treatment recommendations']
+      description: 'Visual crop selection with expert guidance',
+      icon: 'bx-leaf',
+      href: '/select-crop'
     }
   ];
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-          {t('guidedFlow')}
-        </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          Choose from our structured assistance options to get specific help with weather, government schemes, or plant protection
-        </p>
-      </div>
-
-      {/* Guided Options */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
-        {guidedOptions.map((option) => (
-          <Link
-            key={option.title}
-            to={option.href}
-            className="group block"
-          >
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 h-full">
-              <div className="flex items-center mb-4">
-                <div className={`${option.color} w-12 h-12 rounded-lg flex items-center justify-center mr-4`}>
-                  <i className={`bx ${option.icon} text-2xl text-white`}></i>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                  {option.title}
-                </h3>
-              </div>
-              
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                {option.description}
-              </p>
-              
-              <ul className="space-y-2">
-                {option.features.map((feature, index) => (
-                  <li key={index} className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                    <i className="bx bx-check w-4 h-4 text-green-500 mr-2 flex-shrink-0"></i>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              
-              <div className="mt-6 flex items-center text-primary-600 dark:text-primary-400 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors">
-                <span className="text-sm font-medium">Get Started</span>
-                <i className="bx bx-right-arrow-alt w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
-              </div>
+    <div className="min-h-screen bg-dark-950 p-6">
+      <div className="max-w-7xl mx-auto space-y-12">
+        {/* Header */}
+        <div className="text-center space-y-4 animate-slide-in">
+          <div className="inline-flex items-center gap-3 mb-2">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-green/20 to-neon-cyan/20 flex items-center justify-center">
+              <i className="bx bx-leaf text-2xl text-neon-green"></i>
             </div>
-          </Link>
-        ))}
-      </div>
-
-      {/* Help Section */}
-      <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          Need Help Choosing?
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-          <div>
-            <h3 className="font-medium text-gray-900 dark:text-white mb-2">For Weather Information</h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Use when planning farming activities, irrigation schedules, or preparing for weather changes
-            </p>
+            <h1 className="text-4xl font-bold text-white">
+              {t('guidedFlow')}
+            </h1>
           </div>
-          <div>
-            <h3 className="font-medium text-gray-900 dark:text-white mb-2">For Financial Support</h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Explore government schemes when looking for subsidies, insurance, or credit facilities
-            </p>
-          </div>
-          <div>
-            <h3 className="font-medium text-gray-900 dark:text-white mb-2">For Crop Issues</h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Get plant protection help when you notice unusual symptoms or pest problems in your crops
-            </p>
-          </div>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto font-light">
+            AI-powered insights for modern agriculture
+          </p>
         </div>
-        
-        <div className="mt-6 text-center">
-          <Link
-            to="/chat"
-            className="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
-          >
-            <span className="text-sm font-medium">Or chat freely with our AI assistant</span>
-            <i className="bx bx-chat w-4 h-4 ml-2"></i>
-          </Link>
+
+        {/* Guided Flow Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {guidedOptions.map((option, index) => (
+            <GuidedFlowCard
+              key={option.title}
+              icon={option.icon}
+              title={option.title}
+              description={option.description}
+              onClick={() => navigate(option.href)}
+              delay={index * 100}
+            />
+          ))}
+        </div>
+
+        {/* Quick Info */}
+        <div className="premium-card rounded-2xl p-8 animate-slide-in" style={{ animationDelay: '400ms' }}>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-white tracking-tight">Need Help Choosing?</h2>
+            <i className="bx bx-help-circle text-2xl text-neon-green opacity-70"></i>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <i className="bx bx-sun text-neon-cyan text-lg"></i>
+                <h3 className="font-semibold text-gray-300 tracking-tight">Weather</h3>
+              </div>
+              <p className="text-sm text-gray-500 font-light">Plan activities with real-time forecasts</p>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <i className="bx bx-file text-neon-green text-lg"></i>
+                <h3 className="font-semibold text-gray-300 tracking-tight">Schemes</h3>
+              </div>
+              <p className="text-sm text-gray-500 font-light">Access subsidies and financial support</p>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <i className="bx bx-shield text-neon-blue text-lg"></i>
+                <h3 className="font-semibold text-gray-300 tracking-tight">Protection</h3>
+              </div>
+              <p className="text-sm text-gray-500 font-light">Diagnose and treat crop diseases</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

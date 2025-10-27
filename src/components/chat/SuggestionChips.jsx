@@ -1,18 +1,20 @@
-import { colors } from '../../utils/colors';
-
 const SuggestionChips = ({ suggestions, onSelect }) => {
   return (
-    <div className="flex flex-wrap gap-3 mt-3 animate-slide-up">
+    <div className="flex flex-wrap gap-2 mt-4">
       {suggestions.map((suggestion, index) => (
         <button
           key={index}
           onClick={() => onSelect(suggestion.action)}
-          className={`group relative px-5 py-3 ${colors.gradientLight} dark:from-gray-700 dark:to-gray-600 border-2 ${colors.borderPrimary} dark:border-green-600 rounded-2xl text-sm font-semibold text-gray-800 dark:text-white hover:bg-gradient-to-r hover:from-green-600 hover:to-emerald-700 hover:text-white transition-all duration-300 hover:scale-110 hover:shadow-xl shadow-md flex items-center space-x-2 overflow-hidden`}
-          style={{ animationDelay: `${index * 100}ms` }}
+          className="group relative px-5 py-2.5 glass-panel border border-neon-green/20 hover:border-neon-green rounded-full text-sm font-medium text-gray-300 hover:text-neon-green transition-all duration-300 hover:scale-105 flex items-center gap-2 overflow-hidden animate-bounce-in active:animate-pulse-glow"
+          style={{ 
+            animationDelay: `${index * 80}ms`,
+            animation: `bounceIn 0.5s ease-out ${index * 80}ms both`
+          }}
         >
-          <i className={`bx ${suggestion.icon} text-xl group-hover:scale-125 transition-transform duration-300`}></i>
-          <span className="relative z-10">{suggestion.text}</span>
-          <div className={`absolute inset-0 bg-gradient-to-r ${colors.shimmer} translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700`}></div>
+          <i className={`bx ${suggestion.icon} text-base group-hover:scale-110 transition-transform`}></i>
+          <span>{suggestion.text}</span>
+          <div className="absolute inset-0 bg-neon-green/5 opacity-0 group-hover:opacity-100 rounded-full transition-opacity duration-300"></div>
+          <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ boxShadow: '0 0 20px rgba(0, 255, 136, 0.4)' }}></div>
         </button>
       ))}
     </div>
